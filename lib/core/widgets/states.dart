@@ -17,6 +17,7 @@ void showMessage(BuildContext context, String text, {bool error = false}) {
     ..hideCurrentSnackBar()
     ..showSnackBar(
       SnackBar(
+        duration: Duration(seconds: error ? 4 : 2),
         content: Row(
           children: [
             Icon(

@@ -85,14 +85,18 @@ class ApiClient {
   }
 
   Future<Json?> _send(String method, String path, {required AuthKind auth, Object? body}) async {
-    final request = http.Request(method, uri(path))..headers.addAll(headers(auth));
-    if (body != null) {
-      request.headers['Content-Type'] = 'application/json';
-      request.body = jsonEncode(body);
+    http.Request build() {
+      final request = http.Request(method, uri(path))..headers.addAll(headers(auth));
+      if (body != null) {
+        request.headers['Content-Type'] = 'application/json';
+        request.body = jsonEncode(body);
+      }
+      return request;
     }
+
     final http.Response response;
     try {
-      response = await http.Response.fromStream(await _client.send(request).timeout(timeout));
+      response = await _sendWithStaleRetry(build);
     } on TimeoutException {
       throw const ApiException.network('timeout');
     } on http.ClientException catch (e) {
@@ -111,6 +115,22 @@ class ApiClient {
     }
     throw _failure(response.statusCode, text, auth);
   }
+
+  /// Sends the request, retrying once when a pooled keep-alive connection turns out to have been
+  /// closed by the server while idle (Node closes idle sockets after 5 s). The server never saw
+  /// that request, so a single retry cannot place anything twice.
+  Future<http.Response> _sendWithStaleRetry(http.Request Function() build) async {
+    try {
+      return await http.Response.fromStream(await _client.send(build()).timeout(timeout));
+    } on http.ClientException catch (e) {
+      if (!isStaleConnection(e)) rethrow;
+      return http.Response.fromStream(await _client.send(build()).timeout(timeout));
+    }
+  }
+
+  /// The error `dart:io` gives when a reused connection was already closed by the server.
+  static bool isStaleConnection(http.ClientException e) =>
+      e.message.contains('Connection closed before full header was received');
 
   ApiException _failure(int status, String text, AuthKind auth) {
     final error = ApiException.fromResponse(status, _decode(text));

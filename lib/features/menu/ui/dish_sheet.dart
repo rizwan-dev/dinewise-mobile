@@ -60,7 +60,7 @@ class _DishSheetState extends ConsumerState<DishSheet> {
     };
     messenger
       ..hideCurrentSnackBar()
-      ..showSnackBar(SnackBar(content: Text(text)));
+      ..showSnackBar(SnackBar(duration: const Duration(seconds: 2), content: Text(text)));
   }
 
   @override

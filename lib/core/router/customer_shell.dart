@@ -26,12 +26,8 @@ class CustomerShell extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final wide = MediaQuery.sizeOf(context).width >= 840;
-    final body = Column(
-      children: [
-        Expanded(child: shell),
-        const CartBar(),
-      ],
-    );
+    // The cart bar sits in the Scaffold's bottom area so floating snack bars appear above it.
+    final body = shell;
 
     if (wide) {
       return Scaffold(
@@ -66,23 +62,30 @@ class CustomerShell extends ConsumerWidget {
             ],
           ),
         ),
+        bottomNavigationBar: const SafeArea(top: false, child: CartBar()),
       );
     }
 
     return Scaffold(
       body: body,
-      bottomNavigationBar: DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border(top: BorderSide(color: context.palette.hairline)),
-        ),
-        child: NavigationBar(
-          selectedIndex: shell.currentIndex,
-          onDestinationSelected: _go,
-          destinations: [
-            for (final (icon, selected, label) in _destinations)
-              NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
-          ],
-        ),
+      bottomNavigationBar: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          const CartBar(),
+          DecoratedBox(
+            decoration: BoxDecoration(
+              border: Border(top: BorderSide(color: context.palette.hairline)),
+            ),
+            child: NavigationBar(
+              selectedIndex: shell.currentIndex,
+              onDestinationSelected: _go,
+              destinations: [
+                for (final (icon, selected, label) in _destinations)
+                  NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),
+              ],
+            ),
+          ),
+        ],
       ),
     );
   }

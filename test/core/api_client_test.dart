@@ -154,5 +154,30 @@ void main() {
       final api = clientFor(MockClient((_) async => http.Response('<html>', 200)));
       await expectLater(api.get('/menu'), throwsA(isA<ApiException>()));
     });
+
+    test('retries once when a kept-alive connection was closed by the server while idle', () async {
+      var calls = 0;
+      final api = clientFor(
+        MockClient((_) async {
+          calls++;
+          if (calls == 1) throw http.ClientException('Connection closed before full header was received');
+          return json({'phone': '+919822022314', 'expiresInSeconds': 300}, 200);
+        }),
+      );
+      expect((await api.post('/auth/otp', body: {'phone': '9822022314'}))!['phone'], '+919822022314');
+      expect(calls, 2);
+    });
+
+    test('does not retry other connection failures', () async {
+      var calls = 0;
+      final api = clientFor(
+        MockClient((_) async {
+          calls++;
+          throw http.ClientException('Connection refused');
+        }),
+      );
+      await expectLater(api.post('/orders', body: {}), throwsA(isA<ApiException>()));
+      expect(calls, 1);
+    });
   });
 }
