@@ -95,9 +95,7 @@ class Dish {
     available: json['available'] as bool? ?? true,
     photoUrl: json['photoUrl'] as String?,
     variants: [for (final v in json['variants'] as List? ?? const []) Variant.fromJson(v as Json)],
-    addonGroups: [
-      for (final g in json['addonGroups'] as List? ?? const []) AddonGroup.fromJson(g as Json),
-    ],
+    addonGroups: [for (final g in json['addonGroups'] as List? ?? const []) AddonGroup.fromJson(g as Json)],
   );
 
   final int id;
@@ -143,11 +141,8 @@ class Dish {
 class Variant {
   const Variant({required this.id, required this.name, required this.pricePaise});
 
-  factory Variant.fromJson(Json json) => Variant(
-    id: json['id']! as int,
-    name: json['name']! as String,
-    pricePaise: json['pricePaise']! as int,
-  );
+  factory Variant.fromJson(Json json) =>
+      Variant(id: json['id']! as int, name: json['name']! as String, pricePaise: json['pricePaise']! as int);
 
   final int id;
   final String name;

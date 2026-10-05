@@ -32,7 +32,10 @@ class OrdersScreen extends ConsumerWidget {
               icon: Icons.receipt_long_outlined,
               title: 'Your orders live here',
               message: 'Sign in to follow an order live and see what you ordered before.',
-              action: FilledButton(onPressed: () => context.push(Routes.signIn), child: const Text('Sign in')),
+              action: FilledButton(
+                onPressed: () => context.push(Routes.signIn),
+                child: const Text('Sign in'),
+              ),
             )
           : RefreshIndicator(
               onRefresh: () => ref.refresh(myOrdersProvider.future),
@@ -43,7 +46,10 @@ class OrdersScreen extends ConsumerWidget {
                       icon: Icons.ramen_dining_outlined,
                       title: 'No orders yet',
                       message: 'Your first order is a few taps away.',
-                      action: FilledButton(onPressed: () => context.go(Routes.menu), child: const Text('See the menu')),
+                      action: FilledButton(
+                        onPressed: () => context.go(Routes.menu),
+                        child: const Text('See the menu'),
+                      ),
                     ),
                   ],
                 ),
@@ -115,10 +121,15 @@ class _OrderTile extends StatelessWidget {
                   width: 48,
                   height: 48,
                   decoration: BoxDecoration(
-                    color: order.isFinal ? Theme.of(context).colorScheme.surfaceContainerHighest : palette.accentSoft,
+                    color: order.isFinal
+                        ? Theme.of(context).colorScheme.surfaceContainerHighest
+                        : palette.accentSoft,
                     borderRadius: BorderRadius.circular(14),
                   ),
-                  child: Icon(statusIcon(order.status), color: order.isFinal ? palette.subtle : palette.accent),
+                  child: Icon(
+                    statusIcon(order.status),
+                    color: order.isFinal ? palette.subtle : palette.accent,
+                  ),
                 ),
                 const SizedBox(width: 14),
                 Expanded(
@@ -129,7 +140,9 @@ class _OrderTile extends StatelessWidget {
                         children: [
                           Text(order.code, style: context.text.titleMedium),
                           const SizedBox(width: 8),
-                          Flexible(child: StatusChip(status: order.status, label: order.statusLabel)),
+                          Flexible(
+                            child: StatusChip(status: order.status, label: order.statusLabel),
+                          ),
                         ],
                       ),
                       const SizedBox(height: 4),

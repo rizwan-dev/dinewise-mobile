@@ -5,8 +5,7 @@ import 'package:dinewise/core/api/api_client.dart';
 
 /// Responses recorded from the real API (`docker compose up`, demo seed), in
 /// `test/support/fixtures/`.
-Json fixture(String name) =>
-    jsonDecode(File('test/support/fixtures/$name.json').readAsStringSync()) as Json;
+Json fixture(String name) => jsonDecode(File('test/support/fixtures/$name.json').readAsStringSync()) as Json;
 
 /// The demo menu. Photo URLs are dropped by default: widget tests have no network.
 Json menuJson({bool photos = true}) {

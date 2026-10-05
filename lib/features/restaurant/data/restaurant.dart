@@ -23,11 +23,7 @@ class Restaurant {
       name: json['name']! as String,
       tagline: json['tagline']! as String,
       phone: json['phone']! as String,
-      address: [
-        address['street'],
-        address['city'],
-        address['postalCode'],
-      ].whereType<String>().join(', '),
+      address: [address['street'], address['city'], address['postalCode']].whereType<String>().join(', '),
       hours: [for (final h in json['hours']! as List) OpeningHours.fromJson(h as Json)],
       openNow: json['openNow']! as bool,
       nextReadyAt: parseInstantOrNull(json['nextReadyAt']),

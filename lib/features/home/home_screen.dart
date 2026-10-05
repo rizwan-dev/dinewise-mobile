@@ -39,7 +39,9 @@ class HomeScreen extends ConsumerWidget {
 
     if (restaurant.hasError && !restaurant.hasValue) {
       return Scaffold(
-        body: SafeArea(child: ErrorView(error: restaurant.error, onRetry: () => _refresh(ref))),
+        body: SafeArea(
+          child: ErrorView(error: restaurant.error, onRetry: () => _refresh(ref)),
+        ),
       );
     }
 
@@ -60,7 +62,7 @@ class HomeScreen extends ConsumerWidget {
               if (offers.isNotEmpty)
                 SliverToBoxAdapter(
                   child: SizedBox(
-                    height: 150,
+                    height: 110 + 40 * MediaQuery.textScalerOf(context).scale(1),
                     child: ListView.separated(
                       padding: const EdgeInsets.fromLTRB(16, 16, 16, 0),
                       scrollDirection: Axis.horizontal,
@@ -79,9 +81,7 @@ class HomeScreen extends ConsumerWidget {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     childAspectRatio: 4 / 3,
-                    children: [
-                      for (final s in value.sections) _SectionTile(section: s),
-                    ],
+                    children: [for (final s in value.sections) _SectionTile(section: s)],
                   ),
                 ),
                 AsyncValue(:final error?) => SliverToBoxAdapter(
@@ -94,7 +94,10 @@ class HomeScreen extends ConsumerWidget {
                     mainAxisSpacing: 12,
                     crossAxisSpacing: 12,
                     childAspectRatio: 4 / 3,
-                    children: [for (var i = 0; i < 4; i++) const Skeleton(child: Bone(radius: 20, height: double.infinity))],
+                    children: [
+                      for (var i = 0; i < 4; i++)
+                        const Skeleton(child: Bone(radius: 20, height: double.infinity)),
+                    ],
                   ),
                 ),
               },
@@ -111,7 +114,7 @@ class HomeScreen extends ConsumerWidget {
                 ),
                 SliverToBoxAdapter(
                   child: SizedBox(
-                    height: 276,
+                    height: 216 + 60 * MediaQuery.textScalerOf(context).scale(1),
                     child: ListView.separated(
                       padding: const EdgeInsets.symmetric(horizontal: 16),
                       scrollDirection: Axis.horizontal,
@@ -199,13 +202,18 @@ class _Hero extends ConsumerWidget {
       status = 'Checking the kitchen…';
     } else {
       status = r.openNow ? 'Open now' : 'Closed now';
-      if (r.nextReadyAt != null) status += ' · next ready by ${formatDayAndTime(r.nextReadyAt!, now: now).replaceFirst('Today, ', '')}';
+      if (r.nextReadyAt != null) {
+        status +=
+            ' · next ready by ${formatDayAndTime(r.nextReadyAt!, now: now).replaceFirst('Today, ', '')}';
+      }
     }
     return ClipRRect(
       borderRadius: BorderRadius.circular(28),
       child: Stack(
         children: [
-          Positioned.fill(child: Image.asset('assets/images/hero.webp', fit: BoxFit.cover, excludeFromSemantics: true)),
+          Positioned.fill(
+            child: Image.asset('assets/images/hero.webp', fit: BoxFit.cover, excludeFromSemantics: true),
+          ),
           Positioned.fill(
             child: DecoratedBox(
               decoration: BoxDecoration(
@@ -249,7 +257,10 @@ class _Hero extends ConsumerWidget {
                         Flexible(
                           child: Text(
                             status,
-                            style: context.text.labelMedium!.copyWith(color: Colors.white, fontWeight: FontWeight.w600),
+                            style: context.text.labelMedium!.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w600,
+                            ),
                           ),
                         ),
                       ],
@@ -268,7 +279,10 @@ class _Hero extends ConsumerWidget {
                 ),
                 const SizedBox(height: 18),
                 FilledButton.icon(
-                  style: FilledButton.styleFrom(backgroundColor: Colors.white, foregroundColor: Brand.saffron700),
+                  style: FilledButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    foregroundColor: Brand.saffron700,
+                  ),
                   onPressed: () => context.go(Routes.menu),
                   icon: const Icon(Icons.restaurant_menu_rounded),
                   label: const Text('Order now'),
@@ -323,19 +337,24 @@ class _OfferCard extends ConsumerWidget {
           ),
           Row(
             children: [
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(
-                  color: palette.card,
-                  borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Brand.saffron200),
-                ),
-                child: Text(
-                  offer.code,
-                  style: context.text.labelLarge!.copyWith(fontFamily: 'monospace', letterSpacing: 1),
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: palette.card,
+                    borderRadius: BorderRadius.circular(8),
+                    border: Border.all(color: Brand.saffron200),
+                  ),
+                  child: FittedBox(
+                    fit: BoxFit.scaleDown,
+                    child: Text(
+                      offer.code,
+                      style: context.text.labelLarge!.copyWith(fontFamily: 'monospace', letterSpacing: 1),
+                    ),
+                  ),
                 ),
               ),
-              const Spacer(),
+              const SizedBox(width: 4),
               TextButton(
                 onPressed: applied
                     ? null
@@ -392,7 +411,11 @@ class _SectionTile extends StatelessWidget {
                     Text(
                       section.name,
                       maxLines: 2,
-                      style: context.text.titleLarge!.copyWith(color: Colors.white, fontSize: 17, height: 1.15),
+                      style: context.text.titleLarge!.copyWith(
+                        color: Colors.white,
+                        fontSize: 17,
+                        height: 1.15,
+                      ),
                     ),
                     Text(
                       '${section.items.length} dishes',
@@ -425,13 +448,20 @@ class _BestsellerCard extends ConsumerWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 132, width: double.infinity, child: DishPhoto(url: dish.photoUrl, memCacheWidth: 630)),
+              SizedBox(
+                height: 132,
+                width: double.infinity,
+                child: DishPhoto(url: dish.photoUrl, memCacheWidth: 630),
+              ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(12, 10, 12, 0),
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Padding(padding: const EdgeInsets.only(top: 3), child: VegMark(veg: dish.veg, size: 14)),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3),
+                      child: VegMark(veg: dish.veg, size: 14),
+                    ),
                     const SizedBox(width: 8),
                     Expanded(
                       child: Text(
@@ -451,7 +481,9 @@ class _BestsellerCard extends ConsumerWidget {
                   children: [
                     Expanded(
                       child: Text(
-                        dish.variants.isEmpty ? formatPaise(dish.pricePaise) : 'from ${formatPaise(dish.fromPricePaise)}',
+                        dish.variants.isEmpty
+                            ? formatPaise(dish.pricePaise)
+                            : 'from ${formatPaise(dish.fromPricePaise)}',
                         style: context.text.titleSmall,
                       ),
                     ),

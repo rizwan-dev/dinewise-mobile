@@ -96,11 +96,7 @@ final routerProvider = Provider<GoRouter>((ref) {
           ),
         ],
       ),
-      GoRoute(
-        path: Routes.cart,
-        parentNavigatorKey: rootNavigatorKey,
-        builder: (_, _) => const CartScreen(),
-      ),
+      GoRoute(path: Routes.cart, parentNavigatorKey: rootNavigatorKey, builder: (_, _) => const CartScreen()),
       GoRoute(
         path: Routes.checkout,
         parentNavigatorKey: rootNavigatorKey,

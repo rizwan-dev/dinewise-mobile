@@ -21,7 +21,12 @@ final signedInCustomer = CustomerSession(
 final signedInKitchen = StaffSession(
   token: FakeApi.staffToken,
   expiresAt: DateTime.utc(2099),
-  staff: const StaffMember(id: 2, name: 'Kitchen', email: 'kitchen@tadkalane.example', role: StaffRole.kitchen),
+  staff: const StaffMember(
+    id: 2,
+    name: 'Kitchen',
+    email: 'kitchen@tadkalane.example',
+    role: StaffRole.kitchen,
+  ),
 );
 
 /// Starts the whole app against [api], optionally signed in and at [location].

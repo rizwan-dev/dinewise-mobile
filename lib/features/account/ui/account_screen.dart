@@ -78,8 +78,14 @@ class AccountScreen extends ConsumerWidget {
                           title: const Text('Sign out?'),
                           content: const Text('Your cart stays on this phone.'),
                           actions: [
-                            TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancel')),
-                            TextButton(onPressed: () => Navigator.pop(context, true), child: const Text('Sign out')),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, false),
+                              child: const Text('Cancel'),
+                            ),
+                            TextButton(
+                              onPressed: () => Navigator.pop(context, true),
+                              child: const Text('Sign out'),
+                            ),
                           ],
                         ),
                       );
@@ -108,7 +114,10 @@ class AccountScreen extends ConsumerWidget {
             Center(
               child: Column(
                 children: [
-                  Text(restaurant.name, style: context.text.titleLarge!.copyWith(color: context.palette.accent)),
+                  Text(
+                    restaurant.name,
+                    style: context.text.titleLarge!.copyWith(color: context.palette.accent),
+                  ),
                   const SizedBox(height: 4),
                   Text(restaurant.address, textAlign: TextAlign.center, style: context.text.bodySmall),
                   Text(restaurant.phone, style: context.text.bodySmall),
@@ -200,12 +209,14 @@ class _Addresses extends ConsumerWidget {
                     ),
                 ],
               ),
-              AsyncValue(:final error?) => ErrorView(error: error, compact: true, onRetry: () => ref.invalidate(meProvider)),
+              AsyncValue(:final error?) => ErrorView(
+                error: error,
+                compact: true,
+                onRetry: () => ref.invalidate(meProvider),
+              ),
               _ => const Padding(
                 padding: EdgeInsets.symmetric(vertical: 8),
-                child: Skeleton(
-                  child: Column(children: [Bone(), SizedBox(height: 10), Bone(width: 180)]),
-                ),
+                child: Skeleton(child: Column(children: [Bone(), SizedBox(height: 10), Bone(width: 180)])),
               ),
             },
           ],

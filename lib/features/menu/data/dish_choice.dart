@@ -8,15 +8,11 @@ import 'menu.dart';
 class DishChoice {
   DishChoice._(this.dish, this.variant, this.selected, this.quantity);
 
-  factory DishChoice.initial(Dish dish) => DishChoice._(
-    dish,
-    dish.variants.isEmpty ? null : dish.variants.first,
-    {
-      for (final g in dish.addonGroups)
-        g.id: g.isSingleChoice && g.addons.isNotEmpty ? {g.addons.first.id} : <int>{},
-    },
-    1,
-  );
+  factory DishChoice.initial(Dish dish) =>
+      DishChoice._(dish, dish.variants.isEmpty ? null : dish.variants.first, {
+        for (final g in dish.addonGroups)
+          g.id: g.isSingleChoice && g.addons.isNotEmpty ? {g.addons.first.id} : <int>{},
+      }, 1);
 
   final Dish dish;
   final Variant? variant;

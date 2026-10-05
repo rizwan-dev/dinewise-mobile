@@ -19,17 +19,17 @@ class OrdersRepository {
   Future<Order> get(String code) async =>
       Order.fromJson((await _api.get('/orders/$code', auth: AuthKind.customer))['order']! as Json);
 
-  Future<Order> cancel(String code) async => Order.fromJson(
-    (await _api.post('/orders/$code/cancel', auth: AuthKind.customer))!['order']! as Json,
-  );
+  Future<Order> cancel(String code) async =>
+      Order.fromJson((await _api.post('/orders/$code/cancel', auth: AuthKind.customer))!['order']! as Json);
 
   /// Places an order. Cash only in v1, so `paymentMethod` is always `ON_DELIVERY`.
   Future<Order> place(Json body) async => Order.fromJson(
     (await _api.post(
-      '/orders',
-      body: {...body, 'paymentMethod': 'ON_DELIVERY'},
-      auth: AuthKind.customer,
-    ))!['order']! as Json,
+          '/orders',
+          body: {...body, 'paymentMethod': 'ON_DELIVERY'},
+          auth: AuthKind.customer,
+        ))!['order']!
+        as Json,
   );
 }
 
@@ -72,9 +72,7 @@ class OrderNotifier extends AsyncNotifier<Order> {
 }
 
 /// The live stream for one order, while it is not final and the app is in the foreground.
-final orderLiveProvider = NotifierProvider.autoDispose.family<OrderLive, LiveStatus, String>(
-  OrderLive.new,
-);
+final orderLiveProvider = NotifierProvider.autoDispose.family<OrderLive, LiveStatus, String>(OrderLive.new);
 
 class OrderLive extends Notifier<LiveStatus> {
   OrderLive(this.code);

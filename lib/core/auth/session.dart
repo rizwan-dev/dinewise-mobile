@@ -7,11 +7,8 @@ import '../format/time.dart';
 class Customer {
   const Customer({required this.id, required this.phone, this.name});
 
-  factory Customer.fromJson(Json json) => Customer(
-    id: json['id']! as int,
-    phone: json['phone']! as String,
-    name: json['name'] as String?,
-  );
+  factory Customer.fromJson(Json json) =>
+      Customer(id: json['id']! as int, phone: json['phone']! as String, name: json['name'] as String?);
 
   final int id;
 
@@ -44,12 +41,7 @@ enum StaffRole {
 }
 
 class StaffMember {
-  const StaffMember({
-    required this.id,
-    required this.name,
-    required this.email,
-    required this.role,
-  });
+  const StaffMember({required this.id, required this.name, required this.email, required this.role});
 
   factory StaffMember.fromJson(Json json) => StaffMember(
     id: json['id']! as int,
@@ -109,11 +101,7 @@ class CustomerSession extends Session {
       CustomerSession(token: token, expiresAt: expiresAt, customer: customer);
 
   @override
-  Json toJson() => {
-    'token': token,
-    'expiresAt': expiresAt.toIso8601String(),
-    'customer': customer.toJson(),
-  };
+  Json toJson() => {'token': token, 'expiresAt': expiresAt.toIso8601String(), 'customer': customer.toJson()};
 }
 
 class StaffSession extends Session {
@@ -143,9 +131,5 @@ class StaffSession extends Session {
   final StaffMember staff;
 
   @override
-  Json toJson() => {
-    'token': token,
-    'expiresAt': expiresAt.toIso8601String(),
-    'staff': staff.toJson(),
-  };
+  Json toJson() => {'token': token, 'expiresAt': expiresAt.toIso8601String(), 'staff': staff.toJson()};
 }

@@ -68,10 +68,7 @@ class Bone extends StatelessWidget {
   Widget build(BuildContext context) => Container(
     width: width,
     height: height,
-    decoration: BoxDecoration(
-      color: context.palette.skeleton,
-      borderRadius: BorderRadius.circular(radius),
-    ),
+    decoration: BoxDecoration(color: context.palette.skeleton, borderRadius: BorderRadius.circular(radius)),
   );
 }
 
@@ -115,7 +112,6 @@ class MenuSkeleton extends StatelessWidget {
   final int rows;
 
   @override
-  Widget build(BuildContext context) => Skeleton(
-    child: Column(children: [for (var i = 0; i < rows; i++) const DishRowSkeleton()]),
-  );
+  Widget build(BuildContext context) =>
+      Skeleton(child: Column(children: [for (var i = 0; i < rows; i++) const DishRowSkeleton()]));
 }

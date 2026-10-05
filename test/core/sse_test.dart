@@ -12,9 +12,7 @@ void main() {
   group('SseParser', () {
     List<SseEvent> parse(String text) {
       final parser = SseParser();
-      return [
-        for (final line in const LineSplitter().convert(text)) ?parser.addLine(line),
-      ];
+      return [for (final line in const LineSplitter().convert(text)) ?parser.addLine(line)];
     }
 
     test('parses the stream shown in the API contract', () async {
@@ -118,16 +116,24 @@ void main() {
       final client = MockClient.streaming((_, _) async => throw http.ClientException('offline'));
       final api = ApiClient(baseUrl: 'http://x/api/v1', tokenFor: (_) => 'tok', clientFactory: () => client);
       final waits = <Duration>[];
-      final live = LiveStream(api, '/orders/TL-1/events', AuthKind.customer, sleep: (d) async => waits.add(d));
+      final live = LiveStream(
+        api,
+        '/orders/TL-1/events',
+        AuthKind.customer,
+        sleep: (d) async => waits.add(d),
+      );
       final updates = await live.updates().take(5).toList();
       expect(updates.every((u) => u is LiveDisconnected), isTrue);
-      expect(waits, [
-        const Duration(seconds: 3),
-        const Duration(seconds: 6),
-        const Duration(seconds: 12),
-        const Duration(seconds: 24),
-        const Duration(seconds: 30),
-      ].take(waits.length));
+      expect(
+        waits,
+        [
+          const Duration(seconds: 3),
+          const Duration(seconds: 6),
+          const Duration(seconds: 12),
+          const Duration(seconds: 24),
+          const Duration(seconds: 30),
+        ].take(waits.length),
+      );
     });
 
     test('stops with the error on 401, and tells the client the token is dead', () async {

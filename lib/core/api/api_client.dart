@@ -43,10 +43,7 @@ class ApiClient {
 
   Map<String, String> headers(AuthKind auth, {String accept = 'application/json'}) {
     final token = auth == AuthKind.none ? null : tokenFor(auth);
-    return {
-      'Accept': accept,
-      if (token != null) 'Authorization': 'Bearer $token',
-    };
+    return {'Accept': accept, if (token != null) 'Authorization': 'Bearer $token'};
   }
 
   Future<Json> get(String path, {AuthKind auth = AuthKind.none}) async {

@@ -144,7 +144,10 @@ class Notice extends StatelessWidget {
             Icon(icon, size: 20, color: fg),
             const SizedBox(width: 10),
             Expanded(
-              child: Text(text, style: context.text.bodyMedium!.copyWith(color: fg, fontWeight: FontWeight.w500)),
+              child: Text(
+                text,
+                style: context.text.bodyMedium!.copyWith(color: fg, fontWeight: FontWeight.w500),
+              ),
             ),
             if (action != null) ...[const SizedBox(width: 8), action!],
           ],

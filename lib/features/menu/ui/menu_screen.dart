@@ -94,7 +94,11 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
     setState(() => _active = slug);
     try {
       if (animate && !MediaQuery.disableAnimationsOf(context)) {
-        await _scroll.animateTo(target, duration: const Duration(milliseconds: 420), curve: Curves.easeOutCubic);
+        await _scroll.animateTo(
+          target,
+          duration: const Duration(milliseconds: 420),
+          curve: Curves.easeOutCubic,
+        );
       } else {
         _scroll.jumpTo(target);
       }
@@ -124,7 +128,7 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
           _ => Column(
             children: [
               _Header(search: _search, vegOnly: _vegOnly, onQuery: (_) {}, onVegOnly: (_) {}),
-              Expanded(child: SingleChildScrollView(child: const MenuSkeleton(rows: 6))),
+              const Expanded(child: SingleChildScrollView(child: MenuSkeleton(rows: 6))),
             ],
           ),
         },
@@ -227,7 +231,12 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
 }
 
 class _Header extends StatelessWidget {
-  const _Header({required this.search, required this.vegOnly, required this.onQuery, required this.onVegOnly});
+  const _Header({
+    required this.search,
+    required this.vegOnly,
+    required this.onQuery,
+    required this.onVegOnly,
+  });
 
   final TextEditingController search;
   final bool vegOnly;

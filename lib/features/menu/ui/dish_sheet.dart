@@ -116,7 +116,9 @@ class _DishSheetState extends ConsumerState<DishSheet> {
                       Text(dish.name, style: text.headlineMedium),
                       const SizedBox(height: 4),
                       Text(
-                        dish.variants.isEmpty ? formatPaise(dish.pricePaise) : 'from ${formatPaise(dish.fromPricePaise)}',
+                        dish.variants.isEmpty
+                            ? formatPaise(dish.pricePaise)
+                            : 'from ${formatPaise(dish.fromPricePaise)}',
                         style: text.titleMedium,
                       ),
                       if (dish.description.isNotEmpty) ...[
@@ -214,7 +216,12 @@ class _DishSheetState extends ConsumerState<DishSheet> {
 }
 
 class _OptionGroup extends StatelessWidget {
-  const _OptionGroup({required this.title, required this.hint, required this.children, this.needsPick = false});
+  const _OptionGroup({
+    required this.title,
+    required this.hint,
+    required this.children,
+    this.needsPick = false,
+  });
 
   final String title;
   final String hint;
@@ -246,12 +253,16 @@ class _OptionGroup extends StatelessWidget {
                   Container(
                     padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
                     decoration: BoxDecoration(
-                      color: needsPick ? palette.accentSoft : Theme.of(context).colorScheme.surfaceContainerHighest,
+                      color: needsPick
+                          ? palette.accentSoft
+                          : Theme.of(context).colorScheme.surfaceContainerHighest,
                       borderRadius: BorderRadius.circular(999),
                     ),
                     child: Text(
                       hint,
-                      style: context.text.labelSmall!.copyWith(color: needsPick ? palette.accentOnSoft : palette.muted),
+                      style: context.text.labelSmall!.copyWith(
+                        color: needsPick ? palette.accentOnSoft : palette.muted,
+                      ),
                     ),
                   ),
                 ],
@@ -313,7 +324,8 @@ class _OptionTile extends StatelessWidget {
                     ),
                   ),
                 ),
-                if (price != null) Text(price!, style: context.text.bodyMedium!.copyWith(color: palette.muted)),
+                if (price != null)
+                  Text(price!, style: context.text.bodyMedium!.copyWith(color: palette.muted)),
               ],
             ),
           ),

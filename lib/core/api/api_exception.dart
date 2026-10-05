@@ -5,12 +5,7 @@
 /// as it is. Failures that never reached the server (no network, timeout, a body that is not the
 /// error shape) get a client-side [code] from [ApiErrorCode] and a friendly message.
 class ApiException implements Exception {
-  const ApiException({
-    required this.status,
-    required this.code,
-    required this.message,
-    this.field,
-  });
+  const ApiException({required this.status, required this.code, required this.message, this.field});
 
   /// Builds the exception from a failed response's status and decoded JSON body.
   factory ApiException.fromResponse(int status, Object? body) {
@@ -20,20 +15,11 @@ class ApiException implements Exception {
         final code = error['code'];
         final message = error['message'];
         if (code is String && message is String) {
-          return ApiException(
-            status: status,
-            code: code,
-            message: message,
-            field: error['field'] as String?,
-          );
+          return ApiException(status: status, code: code, message: message, field: error['field'] as String?);
         }
       }
     }
-    return ApiException(
-      status: status,
-      code: _fallbackCode(status),
-      message: _fallbackMessage(status),
-    );
+    return ApiException(status: status, code: _fallbackCode(status), message: _fallbackMessage(status));
   }
 
   /// The request never got an answer: offline, DNS, timeout, connection reset.
@@ -65,8 +51,7 @@ class ApiException implements Exception {
   bool get isConflict => status == 409;
 
   /// A slot problem at checkout: refresh `/slots` and ask the customer to pick again.
-  bool get isSlotProblem =>
-      code == 'SLOT_FULL' || code == 'SLOT_UNAVAILABLE' || code == 'KITCHEN_FULL';
+  bool get isSlotProblem => code == 'SLOT_FULL' || code == 'SLOT_UNAVAILABLE' || code == 'KITCHEN_FULL';
 
   /// A coupon rule said no (`COUPON_…`).
   bool get isCouponProblem => code.startsWith('COUPON_');

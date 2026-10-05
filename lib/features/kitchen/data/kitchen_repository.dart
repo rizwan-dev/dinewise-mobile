@@ -34,11 +34,7 @@ class KitchenRepository {
 
   /// Moves an order on: normally to its `kitchenNext`, or to `REJECTED` with a reason.
   Future<void> move(String code, String to, {String? reason}) async {
-    await _api.post(
-      '/kitchen/orders/$code/move',
-      body: {'to': to, 'reason': ?reason},
-      auth: AuthKind.staff,
-    );
+    await _api.post('/kitchen/orders/$code/move', body: {'to': to, 'reason': ?reason}, auth: AuthKind.staff);
   }
 
   Future<void> setAvailability(int itemId, {required bool available}) async {
@@ -97,7 +93,8 @@ class BoardNotifier extends AsyncNotifier<Board> {
     if (result.hasValue || !state.hasValue) state = result;
     final after = result.value;
     if (before != null && after != null) {
-      final arrived = after.current.where((t) => !before.contains(t.code)).length +
+      final arrived =
+          after.current.where((t) => !before.contains(t.code)).length +
           after.later.where((t) => !before.contains(t.code)).length;
       if (arrived > 0) ref.read(newOrderSignalProvider.notifier).bump();
     }

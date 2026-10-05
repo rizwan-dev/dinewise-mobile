@@ -66,11 +66,7 @@ class QuantityStepper extends StatelessWidget {
             excludeSemantics: true,
             child: SizedBox(
               width: 28,
-              child: Text(
-                '$quantity',
-                textAlign: TextAlign.center,
-                style: context.text.titleMedium,
-              ),
+              child: Text('$quantity', textAlign: TextAlign.center, style: context.text.titleMedium),
             ),
           ),
           button(Icons.add_rounded, 'One more$what', quantity < max ? quantity + 1 : null),
@@ -208,7 +204,9 @@ class BusyButton extends StatelessWidget {
               )
             : Row(
                 key: const ValueKey('label'),
-                mainAxisAlignment: trailing == null ? MainAxisAlignment.center : MainAxisAlignment.spaceBetween,
+                mainAxisAlignment: trailing == null
+                    ? MainAxisAlignment.center
+                    : MainAxisAlignment.spaceBetween,
                 children: [
                   Flexible(
                     child: Row(

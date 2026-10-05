@@ -117,9 +117,19 @@ class _Tabs extends ConsumerWidget {
             child: TabBarView(
               children: [
                 for (final c in BoardColumn.values)
-                  _TicketList(tickets: board.column(c), now: now, reasons: board.rejectReasons, empty: _emptyText(c)),
+                  _TicketList(
+                    tickets: board.column(c),
+                    now: now,
+                    reasons: board.rejectReasons,
+                    empty: _emptyText(c),
+                  ),
                 if (hasLater)
-                  _TicketList(tickets: board.later, now: now, reasons: board.rejectReasons, empty: 'Nothing scheduled.'),
+                  _TicketList(
+                    tickets: board.later,
+                    now: now,
+                    reasons: board.rejectReasons,
+                    empty: 'Nothing scheduled.',
+                  ),
               ],
             ),
           ),
@@ -166,7 +176,11 @@ class _Columns extends StatelessWidget {
                       itemBuilder: (_, i) => SizedBox(
                         width: 320,
                         child: SingleChildScrollView(
-                          child: TicketCard(ticket: board.later[i], now: now, rejectReasons: board.rejectReasons),
+                          child: TicketCard(
+                            ticket: board.later[i],
+                            now: now,
+                            rejectReasons: board.rejectReasons,
+                          ),
                         ),
                       ),
                     ),
@@ -195,11 +209,23 @@ class _Columns extends StatelessWidget {
                             padding: const EdgeInsets.fromLTRB(14, 12, 14, 4),
                             child: Row(
                               children: [
-                                Semantics(header: true, child: Text(c.label, style: context.text.titleLarge)),
+                                Flexible(
+                                  child: Semantics(
+                                    header: true,
+                                    child: Text(
+                                      c.label,
+                                      style: context.text.titleLarge,
+                                      overflow: TextOverflow.ellipsis,
+                                    ),
+                                  ),
+                                ),
                                 const SizedBox(width: 8),
                                 Container(
                                   padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
-                                  decoration: BoxDecoration(color: palette.card, borderRadius: BorderRadius.circular(999)),
+                                  decoration: BoxDecoration(
+                                    color: palette.card,
+                                    borderRadius: BorderRadius.circular(999),
+                                  ),
                                   child: Text('${board.column(c).length}', style: context.text.labelLarge),
                                 ),
                               ],
@@ -253,7 +279,11 @@ class _TicketList extends ConsumerWidget {
                 const SizedBox(height: 40),
                 Icon(Icons.check_circle_outline_rounded, size: 40, color: context.palette.subtle),
                 const SizedBox(height: 12),
-                Text(empty, textAlign: TextAlign.center, style: context.text.bodyMedium!.copyWith(color: context.palette.muted)),
+                Text(
+                  empty,
+                  textAlign: TextAlign.center,
+                  style: context.text.bodyMedium!.copyWith(color: context.palette.muted),
+                ),
               ],
             )
           : ListView.separated(

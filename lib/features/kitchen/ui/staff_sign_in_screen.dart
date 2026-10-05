@@ -80,7 +80,7 @@ class _StaffSignInScreenState extends ConsumerState<StaffSignInScreen> {
                   ),
                   const SizedBox(height: 28),
                   if (demo) ...[
-                    Notice(
+                    const Notice(
                       icon: Icons.science_outlined,
                       text: 'This is the demo. Step into the kitchen with one tap.',
                     ),
@@ -122,7 +122,10 @@ class _StaffSignInScreenState extends ConsumerState<StaffSignInScreen> {
                     keyboardType: TextInputType.emailAddress,
                     autofillHints: const [AutofillHints.username, AutofillHints.email],
                     textInputAction: TextInputAction.next,
-                    decoration: const InputDecoration(labelText: 'Email', prefixIcon: Icon(Icons.mail_outline_rounded)),
+                    decoration: const InputDecoration(
+                      labelText: 'Email',
+                      prefixIcon: Icon(Icons.mail_outline_rounded),
+                    ),
                   ),
                   const SizedBox(height: 14),
                   TextField(

@@ -150,8 +150,7 @@ class Cart {
   /// The app's own sum, for the cart bar only.
   int get estimatedSubtotalPaise => lines.fold(0, (sum, l) => sum + l.lineTotalPaise);
 
-  int quantityOf(int itemId) =>
-      lines.where((l) => l.itemId == itemId).fold(0, (n, l) => n + l.quantity);
+  int quantityOf(int itemId) => lines.where((l) => l.itemId == itemId).fold(0, (n, l) => n + l.quantity);
 
   bool get hasValidPincode => pincode != null && RegExp(r'^\d{6}$').hasMatch(pincode!);
 
@@ -183,19 +182,25 @@ class Cart {
   Cart setQuantity(String key, int quantity, {int maxQuantity = defaultMaxQuantity}) {
     if (quantity <= 0) return remove(key);
     return _with(
-      lines: [
-        for (final l in lines) l.key == key ? l.withQuantity(quantity.clamp(1, maxQuantity)) : l,
-      ],
+      lines: [for (final l in lines) l.key == key ? l.withQuantity(quantity.clamp(1, maxQuantity)) : l],
     );
   }
 
-  Cart remove(String key) => _with(lines: [for (final l in lines) if (l.key != key) l]);
+  Cart remove(String key) => _with(
+    lines: [
+      for (final l in lines)
+        if (l.key != key) l,
+    ],
+  );
 
   Cart withFulfilment(Fulfilment value) => _with(fulfilment: value);
 
   Cart withPincode(String? value) {
     final cleaned = value?.replaceAll(RegExp(r'\s'), '');
-    return _with(pincode: cleaned == null || cleaned.isEmpty ? null : cleaned, clearPincode: cleaned == null || cleaned.isEmpty);
+    return _with(
+      pincode: cleaned == null || cleaned.isEmpty ? null : cleaned,
+      clearPincode: cleaned == null || cleaned.isEmpty,
+    );
   }
 
   /// Case and spaces do not matter to the server (`welcome 50` = `WELCOME50`).

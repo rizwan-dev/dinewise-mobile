@@ -49,7 +49,11 @@ void main() {
     });
 
     test('INVALID_CREDENTIALS is a 401 but not a dead session', () {
-      const e = ApiException(status: 401, code: 'INVALID_CREDENTIALS', message: 'Email or password is incorrect.');
+      const e = ApiException(
+        status: 401,
+        code: 'INVALID_CREDENTIALS',
+        message: 'Email or password is incorrect.',
+      );
       expect(e.isUnauthenticated, isFalse);
     });
   });
@@ -73,10 +77,12 @@ void main() {
 
     test('sends no token on public calls', () async {
       late http.Request seen;
-      final api = clientFor(MockClient((r) async {
-        seen = r;
-        return json({}, 200);
-      }));
+      final api = clientFor(
+        MockClient((r) async {
+          seen = r;
+          return json({}, 200);
+        }),
+      );
       await api.get('/menu');
       expect(seen.headers.containsKey('Authorization'), isFalse);
     });
@@ -96,14 +102,22 @@ void main() {
       );
       await expectLater(
         api.post('/orders', body: {}, auth: AuthKind.customer),
-        throwsA(isA<ApiException>().having((e) => e.code, 'code', 'SLOT_FULL').having((e) => e.field, 'field', 'slot')),
+        throwsA(
+          isA<ApiException>()
+              .having((e) => e.code, 'code', 'SLOT_FULL')
+              .having((e) => e.field, 'field', 'slot'),
+        ),
       );
     });
 
     test('reports a dead token once, for the kind that was used', () async {
       final dropped = <AuthKind>[];
       final api = clientFor(
-        MockClient((_) async => json({'error': {'code': 'UNAUTHENTICATED', 'message': 'Sign in again.'}}, 401)),
+        MockClient(
+          (_) async => json({
+            'error': {'code': 'UNAUTHENTICATED', 'message': 'Sign in again.'},
+          }, 401),
+        ),
         onUnauthenticated: dropped.add,
       );
       await expectLater(api.get('/kitchen/board', auth: AuthKind.staff), throwsA(isA<ApiException>()));
@@ -114,7 +128,9 @@ void main() {
       final dropped = <AuthKind>[];
       final api = clientFor(
         MockClient(
-          (_) async => json({'error': {'code': 'INVALID_CREDENTIALS', 'message': 'Email or password is incorrect.'}}, 401),
+          (_) async => json({
+            'error': {'code': 'INVALID_CREDENTIALS', 'message': 'Email or password is incorrect.'},
+          }, 401),
         ),
         onUnauthenticated: dropped.add,
       );
@@ -126,7 +142,11 @@ void main() {
       final api = clientFor(MockClient((_) async => throw http.ClientException('Connection refused')));
       await expectLater(
         api.get('/menu'),
-        throwsA(isA<ApiException>().having((e) => e.isNetwork, 'isNetwork', isTrue).having((e) => e.status, 'status', 0)),
+        throwsA(
+          isA<ApiException>()
+              .having((e) => e.isNetwork, 'isNetwork', isTrue)
+              .having((e) => e.status, 'status', 0),
+        ),
       );
     });
 

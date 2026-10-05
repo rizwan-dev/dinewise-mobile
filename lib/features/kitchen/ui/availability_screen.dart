@@ -29,7 +29,9 @@ class _AvailabilityScreenState extends ConsumerState<AvailabilityScreen> {
     try {
       await ref.read(availabilityProvider).set(dish.id, available: available);
       await ref.read(menuProvider.future);
-      if (mounted) showMessage(context, available ? '${dish.name} is back on the menu' : '${dish.name} is sold out');
+      if (mounted) {
+        showMessage(context, available ? '${dish.name} is back on the menu' : '${dish.name} is sold out');
+      }
     } on ApiException catch (e) {
       if (mounted) showMessage(context, e.message, error: true);
     } finally {
@@ -62,13 +64,18 @@ class _AvailabilityScreenState extends ConsumerState<AvailabilityScreen> {
             padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
             child: TextField(
               onChanged: (v) => setState(() => _query = v),
-              decoration: const InputDecoration(hintText: 'Find a dish', prefixIcon: Icon(Icons.search_rounded)),
+              decoration: const InputDecoration(
+                hintText: 'Find a dish',
+                prefixIcon: Icon(Icons.search_rounded),
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Text(
-              soldOut == 0 ? 'Everything is available.' : '$soldOut ${soldOut == 1 ? 'dish is' : 'dishes are'} sold out.',
+              soldOut == 0
+                  ? 'Everything is available.'
+                  : '$soldOut ${soldOut == 1 ? 'dish is' : 'dishes are'} sold out.',
               style: context.text.bodyMedium!.copyWith(color: context.palette.muted),
             ),
           ),

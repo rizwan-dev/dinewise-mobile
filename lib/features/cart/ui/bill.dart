@@ -7,7 +7,13 @@ import '../data/quote.dart';
 /// The bill in the order the website shows it: Item total, Discount (CODE), Packing, Delivery,
 /// GST, To pay. Discount and delivery rows are hidden when zero.
 class BillCard extends StatelessWidget {
-  const BillCard({super.key, required this.totals, this.couponCode, this.gstLabel = 'GST (5%)', this.title = 'Bill'});
+  const BillCard({
+    super.key,
+    required this.totals,
+    this.couponCode,
+    this.gstLabel = 'GST (5%)',
+    this.title = 'Bill',
+  });
 
   final Totals totals;
   final String? couponCode;

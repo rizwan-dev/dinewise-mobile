@@ -47,11 +47,18 @@ class CustomerShell extends ConsumerWidget {
                 indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
                 leading: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 16),
-                  child: Text('Dinewise', style: context.text.titleLarge!.copyWith(color: context.palette.accent)),
+                  child: Text(
+                    'Dinewise',
+                    style: context.text.titleLarge!.copyWith(color: context.palette.accent),
+                  ),
                 ),
                 destinations: [
                   for (final (icon, selected, label) in _destinations)
-                    NavigationRailDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: Text(label)),
+                    NavigationRailDestination(
+                      icon: Icon(icon),
+                      selectedIcon: Icon(selected),
+                      label: Text(label),
+                    ),
                 ],
               ),
               VerticalDivider(width: 1, color: context.palette.hairline),
@@ -65,7 +72,9 @@ class CustomerShell extends ConsumerWidget {
     return Scaffold(
       body: body,
       bottomNavigationBar: DecoratedBox(
-        decoration: BoxDecoration(border: Border(top: BorderSide(color: context.palette.hairline))),
+        decoration: BoxDecoration(
+          border: Border(top: BorderSide(color: context.palette.hairline)),
+        ),
         child: NavigationBar(
           selectedIndex: shell.currentIndex,
           onDestinationSelected: _go,

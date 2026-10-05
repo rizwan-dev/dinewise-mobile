@@ -50,7 +50,10 @@ class OrderScreen extends ConsumerWidget {
         title: Text('Order $code'),
         actions: [
           if (order.value case final o? when !o.isFinal)
-            Padding(padding: const EdgeInsets.only(right: 16), child: LiveIndicator(status: live)),
+            Padding(
+              padding: const EdgeInsets.only(right: 16),
+              child: LiveIndicator(status: live),
+            ),
         ],
       ),
       body: switch (order) {
@@ -106,20 +109,26 @@ class _OrderBody extends ConsumerWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(order.fulfilment == Fulfilment.delivery ? 'Delivering to' : 'Pick up from', style: context.text.titleLarge),
+                Text(
+                  order.fulfilment == Fulfilment.delivery ? 'Delivering to' : 'Pick up from',
+                  style: context.text.titleLarge,
+                ),
                 const SizedBox(height: 8),
                 Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Icon(
-                      order.fulfilment == Fulfilment.delivery ? Icons.home_outlined : Icons.storefront_outlined,
+                      order.fulfilment == Fulfilment.delivery
+                          ? Icons.home_outlined
+                          : Icons.storefront_outlined,
                       size: 20,
                       color: palette.subtle,
                     ),
                     const SizedBox(width: 10),
                     Expanded(
                       child: Text(
-                        order.address?.oneLine ?? '${restaurant?.name ?? 'Tadka Lane'}, ${restaurant?.address ?? 'Baner, Pune'}',
+                        order.address?.oneLine ??
+                            '${restaurant?.name ?? 'Tadka Lane'}, ${restaurant?.address ?? 'Baner, Pune'}',
                         style: context.text.bodyMedium,
                       ),
                     ),
@@ -132,7 +141,12 @@ class _OrderBody extends ConsumerWidget {
                     children: [
                       Icon(Icons.sticky_note_2_outlined, size: 20, color: palette.subtle),
                       const SizedBox(width: 10),
-                      Expanded(child: Text('"$notes"', style: context.text.bodyMedium!.copyWith(fontStyle: FontStyle.italic))),
+                      Expanded(
+                        child: Text(
+                          '"$notes"',
+                          style: context.text.bodyMedium!.copyWith(fontStyle: FontStyle.italic),
+                        ),
+                      ),
                     ],
                   ),
                 ],
@@ -161,7 +175,8 @@ class _OrderBody extends ConsumerWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(item.name, style: context.text.bodyLarge),
-                              if (item.optionsLabel.isNotEmpty) Text(item.optionsLabel, style: context.text.bodySmall),
+                              if (item.optionsLabel.isNotEmpty)
+                                Text(item.optionsLabel, style: context.text.bodySmall),
                             ],
                           ),
                         ),
@@ -177,10 +192,7 @@ class _OrderBody extends ConsumerWidget {
         BillCard(totals: order.totals, couponCode: order.couponCode, title: 'Bill'),
         const SizedBox(height: 16),
         _History(order: order),
-        if (order.canCancel) ...[
-          const SizedBox(height: 24),
-          _CancelButton(code: order.code),
-        ],
+        if (order.canCancel) ...[const SizedBox(height: 24), _CancelButton(code: order.code)],
       ],
     );
   }
@@ -198,7 +210,8 @@ class _StatusHeader extends StatelessWidget {
     final done = order.isFinal && !problem;
     final String subtitle;
     if (order.status == OrderStatus.rejected) {
-      subtitle = 'The restaurant could not accept this order${order.rejectReason == null ? '.' : ': ${order.rejectReason}.'}';
+      subtitle =
+          'The restaurant could not accept this order${order.rejectReason == null ? '.' : ': ${order.rejectReason}.'}';
     } else if (order.status == OrderStatus.cancelled) {
       subtitle = 'You cancelled this order. Nothing to pay.';
     } else if (done) {
@@ -248,7 +261,10 @@ class _StatusHeader extends StatelessWidget {
                   ),
                   if (subtitle.isNotEmpty) ...[
                     const SizedBox(height: 6),
-                    Text(subtitle, style: context.text.bodyMedium!.copyWith(color: fg.withValues(alpha: 0.9))),
+                    Text(
+                      subtitle,
+                      style: context.text.bodyMedium!.copyWith(color: fg.withValues(alpha: 0.9)),
+                    ),
                   ],
                   if (order.scheduled && !order.isFinal) ...[
                     const SizedBox(height: 10),
@@ -268,7 +284,12 @@ class _StatusHeader extends StatelessWidget {
             AnimatedSwitcher(
               duration: const Duration(milliseconds: 300),
               transitionBuilder: (child, a) => ScaleTransition(scale: a, child: child),
-              child: Icon(statusIcon(order.status), key: ValueKey(order.status), size: 52, color: fg.withValues(alpha: 0.9)),
+              child: Icon(
+                statusIcon(order.status),
+                key: ValueKey(order.status),
+                size: 52,
+                color: fg.withValues(alpha: 0.9),
+              ),
             ),
           ],
         ),
@@ -306,7 +327,9 @@ class _Steps extends StatelessWidget {
                             ? palette.accent
                             : palette.card,
                         border: Border.all(
-                          color: step.done ? palette.action : (step.current ? palette.accent : palette.hairline),
+                          color: step.done
+                              ? palette.action
+                              : (step.current ? palette.accent : palette.hairline),
                           width: 2,
                         ),
                       ),
@@ -315,7 +338,9 @@ class _Steps extends StatelessWidget {
                           : step.current
                           ? const Padding(
                               padding: EdgeInsets.all(6),
-                              child: DecoratedBox(decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle)),
+                              child: DecoratedBox(
+                                decoration: BoxDecoration(color: Colors.white, shape: BoxShape.circle),
+                              ),
                             )
                           : null,
                     ),
@@ -368,7 +393,10 @@ class _History extends StatelessWidget {
         child: ExpansionTile(
           shape: const Border(),
           title: Text('History', style: context.text.titleLarge),
-          subtitle: Text('Placed ${formatShortDate(order.createdAt)}, ${formatTime(order.createdAt)}', style: context.text.bodySmall),
+          subtitle: Text(
+            'Placed ${formatShortDate(order.createdAt)}, ${formatTime(order.createdAt)}',
+            style: context.text.bodySmall,
+          ),
           childrenPadding: const EdgeInsets.fromLTRB(16, 0, 16, 12),
           children: [
             for (final entry in order.timeline.reversed)

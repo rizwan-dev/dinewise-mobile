@@ -8,7 +8,9 @@ import '../data/cart.dart';
 /// "As soon as possible (by 1:15 pm)" or "Tomorrow, 12:30 pm".
 String describeSlot(String slot, SlotOptions options, {required DateTime now}) {
   if (slot == Cart.asap) {
-    return options.asap == null ? 'As soon as possible' : 'As soon as possible · by ${formatTime(options.asap!)}';
+    return options.asap == null
+        ? 'As soon as possible'
+        : 'As soon as possible · by ${formatTime(options.asap!)}';
   }
   return formatDayAndTime(parseInstant(slot), now: now);
 }

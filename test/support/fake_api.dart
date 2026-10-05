@@ -122,10 +122,14 @@ class FakeApi {
       case ('POST', '/auth/otp'):
         final digits = (body!['phone']! as String).replaceAll(RegExp(r'\D'), '');
         final national = digits.length > 10 ? digits.substring(digits.length - 10) : digits;
-        if (national.length != 10) return error(400, 'INVALID_PHONE', 'Enter a 10-digit Indian mobile number.', 'phone');
+        if (national.length != 10) {
+          return error(400, 'INVALID_PHONE', 'Enter a 10-digit Indian mobile number.', 'phone');
+        }
         return json({'phone': '+91$national', 'expiresInSeconds': 300, 'demoCode': demoCode});
       case ('POST', '/auth/otp/verify'):
-        if (body!['code'] != demoCode) return error(422, 'WRONG_CODE', 'That code is not right. 4 tries left.', 'code');
+        if (body!['code'] != demoCode) {
+          return error(422, 'WRONG_CODE', 'That code is not right. 4 tries left.', 'code');
+        }
         return json({
           'accessToken': customerToken,
           'tokenType': 'Bearer',
@@ -151,7 +155,16 @@ class FakeApi {
           'orders': [
             for (final o in _orders.values.toList().reversed)
               {
-                for (final k in ['code', 'status', 'statusLabel', 'final', 'fulfilment', 'readyBy', 'createdAt']) k: o[k],
+                for (final k in [
+                  'code',
+                  'status',
+                  'statusLabel',
+                  'final',
+                  'fulfilment',
+                  'readyBy',
+                  'createdAt',
+                ])
+                  k: o[k],
                 'totalPaise': (o['totals']! as Json)['totalPaise'],
               },
           ],
@@ -199,7 +212,11 @@ class FakeApi {
           return json({'order': o});
         case '/cancel':
           if (o['status'] != 'PLACED') {
-            return error(409, 'INVALID_TRANSITION', 'The kitchen has started on this order, so it can no longer be cancelled.');
+            return error(
+              409,
+              'INVALID_TRANSITION',
+              'The kitchen has started on this order, so it can no longer be cancelled.',
+            );
           }
           move(code, 'CANCELLED');
           return json({'order': o});
@@ -217,7 +234,11 @@ class FakeApi {
         return error(422, 'REASON_REQUIRED', 'Say why the order is rejected.', 'note');
       }
       if (to != 'REJECTED' && _next(o) != to) {
-        return error(409, 'INVALID_TRANSITION', 'This order has already moved on. Refresh to see its current state.');
+        return error(
+          409,
+          'INVALID_TRANSITION',
+          'This order has already moved on. Refresh to see its current state.',
+        );
       }
       move(code, to, reason: body['reason'] as String?);
       return json({'code': code, 'status': to, 'statusLabel': _labels[to], 'kitchenNext': _next(o)});
@@ -303,8 +324,13 @@ class FakeApi {
     final delivery = charges['delivery']! as Json;
     var deliveryFee = 0;
     if (body['fulfilment'] == 'DELIVERY') {
-      final pin = (delivery['pincodes']! as List).cast<Json>().where((p) => p['pincode'] == body['pincode']).firstOrNull;
-      if (pin == null) return fail('NO_DELIVERY', 'We do not deliver to that pincode yet. Pickup is available.');
+      final pin = (delivery['pincodes']! as List)
+          .cast<Json>()
+          .where((p) => p['pincode'] == body['pincode'])
+          .firstOrNull;
+      if (pin == null) {
+        return fail('NO_DELIVERY', 'We do not deliver to that pincode yet. Pickup is available.');
+      }
       deliveryFee = subtotal >= (delivery['freeAbovePaise']! as int) ? 0 : pin['feePaise']! as int;
     }
     if (subtotal < 20000) return fail('MINIMUM_ORDER', 'The minimum order is ₹200.');
@@ -313,7 +339,11 @@ class FakeApi {
     var discount = 0;
     Json coupon = {'applied': false, 'code': null, 'problem': null};
     if (code != null) {
-      Json problem(String c, String msg) => {'applied': false, 'code': null, 'problem': {'code': c, 'message': msg}};
+      Json problem(String c, String msg) => {
+        'applied': false,
+        'code': null,
+        'problem': {'code': c, 'message': msg},
+      };
       if (code == 'WELCOME50') {
         if (signedIn && _orders.isNotEmpty) {
           coupon = problem('COUPON_FIRST_ORDER_ONLY', 'WELCOME50 is for your first order only.');
@@ -363,15 +393,25 @@ class FakeApi {
       return error(409, code, 'That time has just filled up. Please pick another.', 'slot');
     }
     if (body['paymentMethod'] == 'ONLINE') {
-      return error(422, 'ONLINE_PAYMENT_NOT_SUPPORTED', 'Online payment is not available in the app yet.', 'paymentMethod');
+      return error(
+        422,
+        'ONLINE_PAYMENT_NOT_SUPPORTED',
+        'Online payment is not available in the app yet.',
+        'paymentMethod',
+      );
     }
-    final quote = _quote(body, signedIn: true);
+    final saved = addresses.where((a) => a['id'] == body['addressId']).firstOrNull;
+    final fresh = body['newAddress'] as Json?;
+    final pincode = saved != null ? saved['pincode'] : (fresh == null ? null : fresh['pincode']);
+    final quote = _quote({...body, 'pincode': pincode}, signedIn: true);
     if (quote['ok'] != true) {
       final p = quote['problem']! as Json;
       return error(422, p['code']! as String, p['message']! as String);
     }
     final couponProblem = (quote['coupon']! as Json)['problem'] as Json?;
-    if (couponProblem != null) return error(422, couponProblem['code']! as String, couponProblem['message']! as String);
+    if (couponProblem != null) {
+      return error(422, couponProblem['code']! as String, couponProblem['message']! as String);
+    }
     final name = body['name'] as String?;
     if (name != null) customerName = name;
     if (customerName == null) return error(400, 'INVALID', 'Please tell us your name.', 'name');
@@ -380,7 +420,9 @@ class FakeApi {
     if (body['fulfilment'] == 'DELIVERY') {
       if (body['addressId'] != null) {
         address = addresses.where((a) => a['id'] == body['addressId']).firstOrNull;
-        if (address == null) return error(404, 'ADDRESS_NOT_FOUND', 'That address is no longer saved.', 'address');
+        if (address == null) {
+          return error(404, 'ADDRESS_NOT_FOUND', 'That address is no longer saved.', 'address');
+        }
       } else if (body['newAddress'] is Json) {
         final n = body['newAddress']! as Json;
         address = {
@@ -415,8 +457,7 @@ class FakeApi {
       'notes': body['notes'],
       'currency': 'INR',
       'items': [
-        for (final (i, l) in (quote['lines']! as List).cast<Json>().indexed)
-          {'id': 160 + i, ...l},
+        for (final (i, l) in (quote['lines']! as List).cast<Json>().indexed) {'id': 160 + i, ...l},
       ],
       'couponCode': (quote['coupon']! as Json)['code'],
       'totals': quote['totals'],
@@ -428,7 +469,11 @@ class FakeApi {
     _decorate(order);
     _orders[code] = order;
     for (final c in _kitchenStreams) {
-      c.add(utf8.encode('event: order\ndata: {"id":1,"code":"$code","status":"PLACED","paymentStatus":"NOT_REQUIRED"}\n\n'));
+      c.add(
+        utf8.encode(
+          'event: order\ndata: {"id":1,"code":"$code","status":"PLACED","paymentStatus":"NOT_REQUIRED"}\n\n',
+        ),
+      );
     }
     return json({'order': order}, 201);
   }
@@ -479,12 +524,19 @@ class FakeApi {
         ? <Object>[]
         : [
             for (final (i, s) in flow.indexed)
-              {'status': s, 'label': _labels[s], 'done': i < at || (isFinal && i == at), 'current': i == at && !isFinal},
+              {
+                'status': s,
+                'label': _labels[s],
+                'done': i < at || (isFinal && i == at),
+                'current': i == at && !isFinal,
+              },
           ];
   }
 
   Json _board() {
-    final open = _orders.values.where((o) => const {'PLACED', 'PREPARING', 'READY', 'OUT_FOR_DELIVERY'}.contains(o['status']));
+    final open = _orders.values.where(
+      (o) => const {'PLACED', 'PREPARING', 'READY', 'OUT_FOR_DELIVERY'}.contains(o['status']),
+    );
     return {
       'serverTime': _now.toIso8601String(),
       'currency': 'INR',
@@ -511,7 +563,10 @@ class FakeApi {
                   'id': (i as Json)['id'],
                   'quantity': i['quantity'],
                   'name': i['name'],
-                  'details': [?i['variantName'], for (final a in i['addons']! as List) (a as Json)['name']].join(' · '),
+                  'details': [
+                    ?i['variantName'],
+                    for (final a in i['addons']! as List) (a as Json)['name'],
+                  ].join(' · '),
                 },
             ],
             'kitchenNext': _next(o),

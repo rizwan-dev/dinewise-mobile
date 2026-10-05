@@ -15,11 +15,7 @@ class CartRepository {
   /// Prices the cart. The customer token is sent when there is one, so coupon rules that
   /// depend on the customer (first order only) are checked for them.
   Future<Quote> quote(QuoteRequest request, {required bool signedIn}) async => Quote.fromJson(
-    (await _api.post(
-      '/quote',
-      body: request.body,
-      auth: signedIn ? AuthKind.customer : AuthKind.none,
-    ))!,
+    (await _api.post('/quote', body: request.body, auth: signedIn ? AuthKind.customer : AuthKind.none))!,
   );
 }
 
@@ -33,10 +29,7 @@ class CartController extends Notifier<Cart> {
 
   (int, int) get _limits {
     final rules = ref.read(restaurantProvider).value?.ordering;
-    return (
-      rules?.maxQuantityPerLine ?? Cart.defaultMaxQuantity,
-      rules?.maxLines ?? Cart.defaultMaxLines,
-    );
+    return (rules?.maxQuantityPerLine ?? Cart.defaultMaxQuantity, rules?.maxLines ?? Cart.defaultMaxLines);
   }
 
   AddOutcome add(CartLine line) {

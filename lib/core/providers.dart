@@ -40,9 +40,7 @@ final apiClientProvider = Provider<ApiClient>((ref) {
 
 /// Whether the app is in the foreground. Live streams close in the background and reconnect,
 /// with a fresh fetch, when the app comes back (as the website does when its tab is hidden).
-final appForegroundProvider = NotifierProvider<AppForegroundNotifier, bool>(
-  AppForegroundNotifier.new,
-);
+final appForegroundProvider = NotifierProvider<AppForegroundNotifier, bool>(AppForegroundNotifier.new);
 
 class AppForegroundNotifier extends Notifier<bool> {
   @override

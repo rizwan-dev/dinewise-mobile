@@ -68,20 +68,14 @@ class _Placeholder extends StatelessWidget {
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
-          colors: dark
-              ? const [Brand.stone800, Brand.stone900]
-              : const [Brand.saffron100, Brand.saffron50],
+          colors: dark ? const [Brand.stone800, Brand.stone900] : const [Brand.saffron100, Brand.saffron50],
         ),
       ),
       child: Center(
         child: AnimatedOpacity(
           opacity: loading ? 0.35 : 0.6,
           duration: const Duration(milliseconds: 200),
-          child: Icon(
-            Icons.ramen_dining_rounded,
-            size: 36,
-            color: dark ? Brand.stone600 : Brand.saffron400,
-          ),
+          child: Icon(Icons.ramen_dining_rounded, size: 36, color: dark ? Brand.stone600 : Brand.saffron400),
         ),
       ),
     );

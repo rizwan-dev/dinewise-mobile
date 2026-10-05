@@ -27,11 +27,14 @@ class DishCard extends ConsumerWidget {
     final simpleLine = ref.watch(
       cartProvider.select((c) => c.lines.where((l) => l.key == simpleKey).firstOrNull?.quantity ?? 0),
     );
-    final price = dish.variants.isEmpty ? formatPaise(dish.pricePaise) : 'from ${formatPaise(dish.fromPricePaise)}';
+    final price = dish.variants.isEmpty
+        ? formatPaise(dish.pricePaise)
+        : 'from ${formatPaise(dish.fromPricePaise)}';
 
     return Semantics(
       container: true,
-      label: '${dish.name}, $price${dish.available ? '' : ', sold out'}${inCart > 0 ? ', $inCart in cart' : ''}',
+      label:
+          '${dish.name}, $price${dish.available ? '' : ', sold out'}${inCart > 0 ? ', $inCart in cart' : ''}',
       child: InkWell(
         onTap: () => showDishSheet(context, dish),
         child: Opacity(
@@ -92,11 +95,7 @@ class DishCard extends ConsumerWidget {
                           ),
                           Positioned(
                             bottom: -18,
-                            child: _AddControl(
-                              dish: dish,
-                              simpleKey: simpleKey,
-                              simpleQuantity: simpleLine,
-                            ),
+                            child: _AddControl(dish: dish, simpleKey: simpleKey, simpleQuantity: simpleLine),
                           ),
                         ],
                       ),
@@ -157,7 +156,9 @@ class _AddControl extends ConsumerWidget {
       borderRadius: BorderRadius.circular(12),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
-        onTap: () => dish.hasOptions ? showDishSheet(context, dish) : addToCart(context, ref, CartLine.fromChoice(dish)),
+        onTap: () => dish.hasOptions
+            ? showDishSheet(context, dish)
+            : addToCart(context, ref, CartLine.fromChoice(dish)),
         child: Container(
           constraints: const BoxConstraints(minWidth: 96, minHeight: 40),
           alignment: Alignment.center,
@@ -172,7 +173,11 @@ class _AddControl extends ConsumerWidget {
             excludeSemantics: true,
             child: Text(
               'ADD',
-              style: context.text.labelLarge!.copyWith(color: palette.action, fontWeight: FontWeight.w800, letterSpacing: 0.6),
+              style: context.text.labelLarge!.copyWith(
+                color: palette.action,
+                fontWeight: FontWeight.w800,
+                letterSpacing: 0.6,
+              ),
             ),
           ),
         ),

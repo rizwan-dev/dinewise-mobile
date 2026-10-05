@@ -50,7 +50,8 @@ class SavedAddress {
   final String? landmark;
   final String pincode;
 
-  String get oneLine => [line1, line2, landmark, pincode].whereType<String>().where((s) => s.isNotEmpty).join(', ');
+  String get oneLine =>
+      [line1, line2, landmark, pincode].whereType<String>().where((s) => s.isNotEmpty).join(', ');
 }
 
 class Me {

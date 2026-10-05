@@ -103,7 +103,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     try {
       final needsName = await ref.read(customerAuthProvider).verify(phone: sent.phone, code: _code.text);
       if (!mounted) return;
-      HapticFeedback.mediumImpact();
+      unawaited(HapticFeedback.mediumImpact());
       if (needsName) {
         setState(() => _step = _Step.name);
       } else {
@@ -126,9 +126,9 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
     }
     final session = ref.read(customerSessionProvider);
     if (session != null) {
-      await ref.read(customerSessionProvider.notifier).save(
-        session.withCustomer(session.customer.copyWith(name: name)),
-      );
+      await ref
+          .read(customerSessionProvider.notifier)
+          .save(session.withCustomer(session.customer.copyWith(name: name)));
     }
     _done();
   }
@@ -217,7 +217,10 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         autofocus: true,
         keyboardType: TextInputType.phone,
         autofillHints: const [AutofillHints.telephoneNumberNational],
-        inputFormatters: [FilteringTextInputFormatter.allow(RegExp(r'[0-9 +\-]')), LengthLimitingTextInputFormatter(16)],
+        inputFormatters: [
+          FilteringTextInputFormatter.allow(RegExp(r'[0-9 +\-]')),
+          LengthLimitingTextInputFormatter(16),
+        ],
         textInputAction: TextInputAction.done,
         onSubmitted: (_) => _sendCode(),
         decoration: InputDecoration(
@@ -239,7 +242,11 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
       key: const ValueKey('code'),
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: [
-        _title(context, 'Enter the code', 'Sent to ${sent.phone}. It works for ${sent.expiresInSeconds ~/ 60} minutes.'),
+        _title(
+          context,
+          'Enter the code',
+          'Sent to ${sent.phone}. It works for ${sent.expiresInSeconds ~/ 60} minutes.',
+        ),
         if (demo && sent.demoCode != null) ...[
           Notice(
             icon: Icons.sms_outlined,
@@ -270,8 +277,8 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
         const SizedBox(height: 20),
         BusyButton(label: 'Verify and sign in', busy: _busy, onPressed: _verify),
         const SizedBox(height: 8),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        Wrap(
+          alignment: WrapAlignment.spaceBetween,
           children: [
             TextButton(
               onPressed: _busy ? null : () => setState(() => _step = _Step.phone),

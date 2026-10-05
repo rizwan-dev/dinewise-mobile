@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -77,7 +79,7 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
     try {
       final order = await ref.read(ordersRepositoryProvider).place(_formData.toBody(cart));
       if (!mounted) return;
-      HapticFeedback.heavyImpact();
+      unawaited(HapticFeedback.heavyImpact());
       ref.read(cartProvider.notifier).clear();
       ref.invalidate(myOrdersProvider);
       ref.invalidate(meProvider);
@@ -150,7 +152,10 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
         body: MessageView(
           icon: Icons.shopping_bag_outlined,
           title: 'Your cart is empty',
-          action: FilledButton(onPressed: () => context.go(Routes.menu), child: const Text('Browse the menu')),
+          action: FilledButton(
+            onPressed: () => context.go(Routes.menu),
+            child: const Text('Browse the menu'),
+          ),
         ),
       );
     }
@@ -199,7 +204,9 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                             selected: _addressId == null,
                             onTap: () {
                               setState(() => _addressId = null);
-                              if (_pincode.text.length == 6) ref.read(cartProvider.notifier).setPincode(_pincode.text);
+                              if (_pincode.text.length == 6) {
+                                ref.read(cartProvider.notifier).setPincode(_pincode.text);
+                              }
                             },
                           ),
                         if (_addressId == null) ...[
@@ -241,7 +248,12 @@ class _CheckoutScreenState extends ConsumerState<CheckoutScreen> {
                 onTap: q == null
                     ? null
                     : () async {
-                        final picked = await showSlotPicker(context, options: q.slots, current: cart.slot, now: now);
+                        final picked = await showSlotPicker(
+                          context,
+                          options: q.slots,
+                          current: cart.slot,
+                          now: now,
+                        );
                         if (picked != null) ref.read(cartProvider.notifier).setSlot(picked);
                       },
               ),

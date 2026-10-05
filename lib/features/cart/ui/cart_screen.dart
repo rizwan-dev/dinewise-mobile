@@ -229,7 +229,9 @@ class _FulfilmentCardState extends ConsumerState<_FulfilmentCard> {
                     ButtonSegment(
                       value: f,
                       label: Text(f.label),
-                      icon: Icon(f == Fulfilment.delivery ? Icons.delivery_dining_outlined : Icons.storefront_outlined),
+                      icon: Icon(
+                        f == Fulfilment.delivery ? Icons.delivery_dining_outlined : Icons.storefront_outlined,
+                      ),
                     ),
                 ],
                 selected: {cart.fulfilment},
@@ -247,7 +249,10 @@ class _FulfilmentCardState extends ConsumerState<_FulfilmentCard> {
                         TextField(
                           controller: _pincode,
                           keyboardType: TextInputType.number,
-                          inputFormatters: [FilteringTextInputFormatter.digitsOnly, LengthLimitingTextInputFormatter(6)],
+                          inputFormatters: [
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(6),
+                          ],
                           autofillHints: const [AutofillHints.postalCode],
                           decoration: const InputDecoration(
                             labelText: 'Delivery pincode',
@@ -263,7 +268,10 @@ class _FulfilmentCardState extends ConsumerState<_FulfilmentCard> {
                           const SizedBox(height: 8),
                           Text('We deliver to ${pincodes.join(', ')}.', style: context.text.bodySmall),
                           if (r?.charges.freeDeliveryAbovePaise case final free?)
-                            Text('Free delivery on item totals of ${formatPaise(free)} or more.', style: context.text.bodySmall),
+                            Text(
+                              'Free delivery on item totals of ${formatPaise(free)} or more.',
+                              style: context.text.bodySmall,
+                            ),
                         ],
                       ],
                     )
@@ -306,7 +314,9 @@ class _WhenCard extends ConsumerWidget {
         leading: const Icon(Icons.schedule_rounded),
         title: Text(cart.fulfilment == Fulfilment.delivery ? 'Delivery time' : 'Pickup time'),
         subtitle: Text(
-          stale ? 'That time is no longer available. Pick another.' : describeSlot(cart.slot, options, now: now),
+          stale
+              ? 'That time is no longer available. Pick another.'
+              : describeSlot(cart.slot, options, now: now),
           style: stale ? TextStyle(color: context.palette.danger) : null,
         ),
         trailing: const Icon(Icons.chevron_right_rounded),
@@ -366,7 +376,10 @@ class _CouponCardState extends ConsumerState<_CouponCard> {
                       children: [
                         Text('$code applied', style: context.text.titleMedium),
                         if (widget.quote?.totals case final t? when t.discountPaise > 0)
-                          Text('You save ${formatPaise(t.discountPaise)}', style: TextStyle(color: palette.success)),
+                          Text(
+                            'You save ${formatPaise(t.discountPaise)}',
+                            style: TextStyle(color: palette.success),
+                          ),
                       ],
                     ),
                   ),
@@ -440,7 +453,8 @@ class _BillArea extends ConsumerWidget {
               Notice(icon: Icons.error_outline_rounded, tone: NoticeTone.danger, text: p.message),
               const SizedBox(height: 12),
             ],
-            if (q.totals case final t?) BillCard(totals: t, couponCode: q.coupon.applied ? q.coupon.code : null),
+            if (q.totals case final t?)
+              BillCard(totals: t, couponCode: q.coupon.applied ? q.coupon.code : null),
           ],
         ),
       ),

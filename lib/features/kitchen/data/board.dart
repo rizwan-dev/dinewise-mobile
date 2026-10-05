@@ -125,8 +125,10 @@ class Board {
   /// Scheduled more than an hour ahead.
   final List<Ticket> later;
 
-  List<Ticket> column(BoardColumn column) =>
-      [for (final t in current) if (t.status == column.status) t];
+  List<Ticket> column(BoardColumn column) => [
+    for (final t in current)
+      if (t.status == column.status) t,
+  ];
 
   /// Codes of every order on the board, to spot new arrivals between fetches.
   Set<String> get codes => {for (final t in current) t.code, for (final t in later) t.code};

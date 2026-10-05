@@ -62,9 +62,7 @@ class CustomerSessionNotifier extends Notifier<CustomerSession?> {
   }
 }
 
-final staffSessionProvider = NotifierProvider<StaffSessionNotifier, StaffSession?>(
-  StaffSessionNotifier.new,
-);
+final staffSessionProvider = NotifierProvider<StaffSessionNotifier, StaffSession?>(StaffSessionNotifier.new);
 
 class StaffSessionNotifier extends Notifier<StaffSession?> {
   @override

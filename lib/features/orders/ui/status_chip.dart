@@ -15,14 +15,19 @@ class StatusChip extends StatelessWidget {
     final palette = context.palette;
     final (bg, fg) = switch (status) {
       OrderStatus.delivered || OrderStatus.collected => (palette.successSoft, palette.success),
-      OrderStatus.cancelled || OrderStatus.rejected || OrderStatus.expired => (palette.dangerSoft, palette.danger),
+      OrderStatus.cancelled ||
+      OrderStatus.rejected ||
+      OrderStatus.expired => (palette.dangerSoft, palette.danger),
       OrderStatus.ready || OrderStatus.outForDelivery => (palette.successSoft, palette.success),
       _ => (palette.accentSoft, palette.accentOnSoft),
     };
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
       decoration: BoxDecoration(color: bg, borderRadius: BorderRadius.circular(999)),
-      child: Text(label, style: context.text.labelMedium!.copyWith(color: fg, fontWeight: FontWeight.w700)),
+      child: Text(
+        label,
+        style: context.text.labelMedium!.copyWith(color: fg, fontWeight: FontWeight.w700),
+      ),
     );
   }
 }

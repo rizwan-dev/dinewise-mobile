@@ -18,17 +18,25 @@ void main() {
       final line = CartLine.fromChoice(butterChicken, variant: butterChicken.variants[1]);
       expect(line.unitPricePaise, 38000);
       expect(line.optionsLabel, 'Full');
-      final mushroom = CartLine.fromChoice(kadaiMushroom, addons: [kadaiMushroom.addonGroups.first.addons[2]]);
+      final mushroom = CartLine.fromChoice(
+        kadaiMushroom,
+        addons: [kadaiMushroom.addonGroups.first.addons[2]],
+      );
       expect(mushroom.optionsLabel, 'Hot');
-      expect(mushroom.toRequest(), {'itemId': 18, 'addonIds': [9], 'quantity': 1});
+      expect(mushroom.toRequest(), {
+        'itemId': 18,
+        'addonIds': [9],
+        'quantity': 1,
+      });
     });
 
     test('the request leaves out an absent variant and empty add-ons', () {
       expect(CartLine.fromChoice(garlicNaan, quantity: 2).toRequest(), {'itemId': 29, 'quantity': 2});
-      expect(
-        CartLine.fromChoice(butterChicken, variant: butterChicken.variants.first).toRequest(),
-        {'itemId': 19, 'variantId': 3, 'quantity': 1},
-      );
+      expect(CartLine.fromChoice(butterChicken, variant: butterChicken.variants.first).toRequest(), {
+        'itemId': 19,
+        'variantId': 3,
+        'quantity': 1,
+      });
     });
 
     test('add-on order does not change the line key', () {
@@ -201,7 +209,10 @@ void main() {
       expect(saved.containsKey('newAddress'), isFalse);
       expect(saved['slot'], '2026-10-05T08:00:00.000Z');
 
-      final pickup = const CheckoutForm(name: 'Asha', addressId: 12).toBody(cart.withFulfilment(Fulfilment.pickup));
+      final pickup = const CheckoutForm(
+        name: 'Asha',
+        addressId: 12,
+      ).toBody(cart.withFulfilment(Fulfilment.pickup));
       expect(pickup.containsKey('addressId'), isFalse);
       expect(pickup.containsKey('newAddress'), isFalse);
     });

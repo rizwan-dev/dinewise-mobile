@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,7 +30,7 @@ class _TicketCardState extends ConsumerState<TicketCard> {
 
   Future<void> _move(String to, {String? reason}) async {
     setState(() => _busy = true);
-    HapticFeedback.mediumImpact();
+    unawaited(HapticFeedback.mediumImpact());
     try {
       await ref.read(boardProvider.notifier).move(widget.ticket.code, to, reason: reason);
     } on ApiException catch (e) {
@@ -71,12 +73,25 @@ class _TicketCardState extends ConsumerState<TicketCard> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              Row(
+              Wrap(
+                alignment: WrapAlignment.spaceBetween,
+                crossAxisAlignment: WrapCrossAlignment.center,
+                spacing: 8,
+                runSpacing: 6,
                 children: [
-                  Text(t.code, style: context.text.titleLarge),
-                  const SizedBox(width: 8),
-                  Icon(delivery ? Icons.delivery_dining_outlined : Icons.storefront_outlined, size: 20, color: palette.subtle),
-                  const Spacer(),
+                  Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(t.code, style: context.text.titleLarge),
+                      const SizedBox(width: 8),
+                      Icon(
+                        delivery ? Icons.delivery_dining_outlined : Icons.storefront_outlined,
+                        size: 20,
+                        color: palette.subtle,
+                        semanticLabel: delivery ? 'Delivery' : 'Pickup',
+                      ),
+                    ],
+                  ),
                   _DueBadge(due: t.dueAt, now: widget.now, late: late, later: t.later),
                 ],
               ),
@@ -98,7 +113,10 @@ class _TicketCardState extends ConsumerState<TicketCard> {
                     children: [
                       SizedBox(
                         width: 34,
-                        child: Text('${item.quantity}×', style: context.text.titleMedium!.copyWith(color: palette.accent)),
+                        child: Text(
+                          '${item.quantity}×',
+                          style: context.text.titleMedium!.copyWith(color: palette.accent),
+                        ),
                       ),
                       Expanded(
                         child: Column(
@@ -116,14 +134,23 @@ class _TicketCardState extends ConsumerState<TicketCard> {
                 const SizedBox(height: 8),
                 Container(
                   padding: const EdgeInsets.all(10),
-                  decoration: BoxDecoration(color: palette.accentSoft, borderRadius: BorderRadius.circular(12)),
+                  decoration: BoxDecoration(
+                    color: palette.accentSoft,
+                    borderRadius: BorderRadius.circular(12),
+                  ),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Icon(Icons.sticky_note_2_outlined, size: 18, color: palette.accentOnSoft),
                       const SizedBox(width: 8),
                       Expanded(
-                        child: Text(notes, style: context.text.bodyMedium!.copyWith(color: palette.accentOnSoft, fontWeight: FontWeight.w600)),
+                        child: Text(
+                          notes,
+                          style: context.text.bodyMedium!.copyWith(
+                            color: palette.accentOnSoft,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -132,11 +159,19 @@ class _TicketCardState extends ConsumerState<TicketCard> {
               const SizedBox(height: 10),
               Row(
                 children: [
-                  Icon(t.cashToCollectPaise == null ? Icons.verified_outlined : Icons.payments_outlined, size: 18, color: palette.success),
+                  Icon(
+                    t.cashToCollectPaise == null ? Icons.verified_outlined : Icons.payments_outlined,
+                    size: 18,
+                    color: palette.success,
+                  ),
                   const SizedBox(width: 6),
-                  Text(
-                    t.cashToCollectPaise == null ? 'Paid online' : 'Collect ${formatPaise(t.cashToCollectPaise!)} cash',
-                    style: context.text.labelLarge!.copyWith(color: palette.success),
+                  Flexible(
+                    child: Text(
+                      t.cashToCollectPaise == null
+                          ? 'Paid online'
+                          : 'Collect ${formatPaise(t.cashToCollectPaise!)} cash',
+                      style: context.text.labelLarge!.copyWith(color: palette.success),
+                    ),
                   ),
                 ],
               ),
@@ -147,7 +182,11 @@ class _TicketCardState extends ConsumerState<TicketCard> {
                   child: FilledButton(
                     onPressed: _busy ? null : () => _move(t.kitchenNext!),
                     child: _busy
-                        ? const SizedBox(width: 22, height: 22, child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white))
+                        ? const SizedBox(
+                            width: 22,
+                            height: 22,
+                            child: CircularProgressIndicator(strokeWidth: 2.5, color: Colors.white),
+                          )
                         : Text(t.kitchenNextLabel ?? 'Next', style: const TextStyle(fontSize: 16)),
                   ),
                 ),
@@ -176,7 +215,9 @@ class _DueBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.palette;
-    final text = later ? formatDayAndTime(due, now: now) : 'Due ${formatTime(due)} · ${formatDueIn(due, now: now)}';
+    final text = later
+        ? formatDayAndTime(due, now: now)
+        : 'Due ${formatTime(due)} · ${formatDueIn(due, now: now)}';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(
@@ -222,7 +263,10 @@ class _RejectSheetState extends State<_RejectSheet> {
       children: [
         Text('Reject ${widget.code}?', style: context.text.headlineSmall),
         const SizedBox(height: 4),
-        Text('The customer sees the reason.', style: context.text.bodyMedium!.copyWith(color: context.palette.muted)),
+        Text(
+          'The customer sees the reason.',
+          style: context.text.bodyMedium!.copyWith(color: context.palette.muted),
+        ),
         const SizedBox(height: 16),
         for (final r in widget.reasons)
           Padding(

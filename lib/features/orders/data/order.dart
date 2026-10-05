@@ -21,8 +21,7 @@ enum OrderStatus {
 
   final String wire;
 
-  static OrderStatus parse(String? value) =>
-      values.firstWhere((s) => s.wire == value, orElse: () => unknown);
+  static OrderStatus parse(String? value) => values.firstWhere((s) => s.wire == value, orElse: () => unknown);
 
   bool get isFinal => switch (this) {
     delivered || collected || cancelled || rejected || expired => true,
@@ -135,7 +134,13 @@ class OrderItem {
 }
 
 class OrderAddress {
-  const OrderAddress({required this.label, required this.line1, this.line2, this.landmark, required this.pincode});
+  const OrderAddress({
+    required this.label,
+    required this.line1,
+    this.line2,
+    this.landmark,
+    required this.pincode,
+  });
 
   factory OrderAddress.fromJson(Json json) => OrderAddress(
     label: json['label'] as String? ?? 'Home',
@@ -151,7 +156,8 @@ class OrderAddress {
   final String? landmark;
   final String pincode;
 
-  String get oneLine => [line1, line2, landmark, pincode].whereType<String>().where((s) => s.isNotEmpty).join(', ');
+  String get oneLine =>
+      [line1, line2, landmark, pincode].whereType<String>().where((s) => s.isNotEmpty).join(', ');
 }
 
 /// `GET /orders/{code}`: everything the order page shows.

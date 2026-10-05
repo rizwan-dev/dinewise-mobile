@@ -194,9 +194,7 @@ abstract final class AppTheme {
           textStyle: buttonText,
         ),
       ),
-      iconButtonTheme: IconButtonThemeData(
-        style: IconButton.styleFrom(minimumSize: const Size(48, 48)),
-      ),
+      iconButtonTheme: IconButtonThemeData(style: IconButton.styleFrom(minimumSize: const Size(48, 48))),
       inputDecorationTheme: InputDecorationTheme(
         filled: true,
         fillColor: palette.card,
