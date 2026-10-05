@@ -1,0 +1,105 @@
+{
+    "name": "Tadka Lane",
+    "tagline": "North Indian home-style cooking, Baner, Pune",
+    "phone": "+91 20 0000 0000",
+    "email": "hello@tadkalane.example",
+    "address": {
+        "street": "Demo Road, Baner",
+        "city": "Pune",
+        "region": "Maharashtra",
+        "postalCode": "411045",
+        "country": "IN"
+    },
+    "timeZone": "Asia/Kolkata",
+    "hours": [
+        {
+            "weekday": 0,
+            "day": "Sunday",
+            "open": "11:00",
+            "close": "23:00"
+        },
+        {
+            "weekday": 1,
+            "day": "Monday",
+            "open": "11:30",
+            "close": "22:30"
+        },
+        {
+            "weekday": 2,
+            "day": "Tuesday",
+            "open": "11:30",
+            "close": "22:30"
+        },
+        {
+            "weekday": 3,
+            "day": "Wednesday",
+            "open": "11:30",
+            "close": "22:30"
+        },
+        {
+            "weekday": 4,
+            "day": "Thursday",
+            "open": "11:30",
+            "close": "22:30"
+        },
+        {
+            "weekday": 5,
+            "day": "Friday",
+            "open": "11:30",
+            "close": "23:00"
+        },
+        {
+            "weekday": 6,
+            "day": "Saturday",
+            "open": "11:00",
+            "close": "23:00"
+        }
+    ],
+    "openNow": true,
+    "nextReadyAt": "2026-10-05T08:15:00.000Z",
+    "serverTime": "2026-10-05T07:35:05.713Z",
+    "currency": "INR",
+    "ordering": {
+        "fulfilment": [
+            "DELIVERY",
+            "PICKUP"
+        ],
+        "paymentMethods": [
+            "ON_DELIVERY"
+        ],
+        "slotMinutes": 15,
+        "ordersPerSlot": 8,
+        "prepMinutes": 30,
+        "scheduleDaysAhead": 2,
+        "minimumOrderPaise": 20000,
+        "maxQuantityPerLine": 20,
+        "maxLines": 30
+    },
+    "charges": {
+        "packagingPaise": 2000,
+        "gstBasisPoints": 500,
+        "gstNote": "GST is charged at 5% on the whole bill after any discount, including packing and delivery: half CGST, half SGST.",
+        "delivery": {
+            "freeAbovePaise": 80000,
+            "pincodes": [
+                {
+                    "pincode": "411007",
+                    "feePaise": 4000
+                },
+                {
+                    "pincode": "411008",
+                    "feePaise": 5000
+                },
+                {
+                    "pincode": "411021",
+                    "feePaise": 4000
+                },
+                {
+                    "pincode": "411045",
+                    "feePaise": 3000
+                }
+            ]
+        }
+    },
+    "demo": true
+}

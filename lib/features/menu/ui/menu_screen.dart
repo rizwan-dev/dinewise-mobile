@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../core/theme/app_theme.dart';
@@ -59,23 +60,21 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
 
   GlobalKey _keyFor(Map<String, GlobalKey> map, String slug) => map.putIfAbsent(slug, GlobalKey.new);
 
-  /// The top of the content area under the pinned chip bar, in global coordinates.
-  double? get _contentTop {
-    final box = context.findRenderObject() as RenderBox?;
-    if (box == null || !box.attached) return null;
-    final scrollable = _scroll.position.context.notificationContext?.findRenderObject() as RenderBox?;
-    if (scrollable == null) return null;
-    return scrollable.localToGlobal(Offset.zero).dy + _chipBarHeight;
+  /// The scroll offset at which [box] sits just under the pinned chip bar.
+  double? _offsetOf(RenderObject? box) {
+    if (box == null || !box.attached || !_scroll.hasClients) return null;
+    final viewport = RenderAbstractViewport.maybeOf(box);
+    if (viewport == null) return null;
+    return viewport.getOffsetToReveal(box, 0).offset - _chipBarHeight;
   }
 
   void _trackActiveSection() {
-    final top = _contentTop;
-    if (top == null) return;
+    if (!_scroll.hasClients) return;
+    final position = _scroll.offset;
     String? current;
     for (final entry in _sectionKeys.entries) {
-      final box = entry.value.currentContext?.findRenderObject() as RenderBox?;
-      if (box == null || !box.attached) continue;
-      if (box.localToGlobal(Offset.zero).dy <= top + 24) current = entry.key;
+      final offset = _offsetOf(entry.value.currentContext?.findRenderObject());
+      if (offset != null && offset <= position + 24) current = entry.key;
     }
     current ??= _sectionKeys.keys.firstOrNull;
     if (current != _active) {
@@ -88,16 +87,19 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
   }
 
   Future<void> _jumpTo(String slug, {bool animate = true}) async {
-    final box = _sectionKeys[slug]?.currentContext?.findRenderObject() as RenderBox?;
-    final top = _contentTop;
-    if (box == null || top == null) return;
-    final delta = box.localToGlobal(Offset.zero).dy - top;
-    final target = (_scroll.offset + delta).clamp(0.0, _scroll.position.maxScrollExtent);
+    final offset = _offsetOf(_sectionKeys[slug]?.currentContext?.findRenderObject());
+    if (offset == null) return;
+    final target = offset.clamp(0.0, _scroll.position.maxScrollExtent);
+    _scroll.removeListener(_trackActiveSection);
     setState(() => _active = slug);
-    if (animate && !MediaQuery.disableAnimationsOf(context)) {
-      await _scroll.animateTo(target, duration: const Duration(milliseconds: 420), curve: Curves.easeOutCubic);
-    } else {
-      _scroll.jumpTo(target);
+    try {
+      if (animate && !MediaQuery.disableAnimationsOf(context)) {
+        await _scroll.animateTo(target, duration: const Duration(milliseconds: 420), curve: Curves.easeOutCubic);
+      } else {
+        _scroll.jumpTo(target);
+      }
+    } finally {
+      _scroll.addListener(_trackActiveSection);
     }
   }
 

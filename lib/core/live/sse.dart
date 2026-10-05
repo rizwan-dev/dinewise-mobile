@@ -1,6 +1,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:http/http.dart' as http;
+
 import '../api/api_client.dart';
 import '../api/api_exception.dart';
 
@@ -157,34 +159,78 @@ class LiveStream {
     return ms > max.inMilliseconds ? max : Duration(milliseconds: ms);
   }
 
-  Stream<LiveUpdate> updates() async* {
-    var base = baseDelay;
-    var failures = 0;
-    while (true) {
-      var connected = false;
-      try {
-        final (client, response) = await api.openStream(path, auth);
+  /// Starts following the endpoint when listened to. Built on a [StreamController] rather than
+  /// `async*` so that cancelling closes the connection at once, even while waiting for data.
+  Stream<LiveUpdate> updates() {
+    var cancelled = false;
+    http.Client? client;
+    StreamSubscription<SseEvent>? subscription;
+    Completer<void>? streamEnded;
+    late final StreamController<LiveUpdate> controller;
+
+    void emit(LiveUpdate update) {
+      if (!cancelled) controller.add(update);
+    }
+
+    Future<void> run() async {
+      var base = baseDelay;
+      var failures = 0;
+      while (!cancelled) {
+        var connected = false;
         try {
+          final (c, response) = await api.openStream(path, auth);
+          client = c;
+          if (cancelled) return;
           connected = true;
           failures = 0;
-          yield const LiveConnected();
+          emit(const LiveConnected());
           final parser = SseParser();
-          await for (final event in parser.bind(response.stream)) {
-            if (parser.retry != null) base = parser.retry!;
-            yield LiveMessage(event);
+          final ended = streamEnded = Completer<void>();
+          subscription = parser
+              .bind(response.stream)
+              .listen(
+                (event) {
+                  if (parser.retry != null) base = parser.retry!;
+                  emit(LiveMessage(event));
+                },
+                onError: (Object _) => ended.isCompleted ? null : ended.complete(),
+                onDone: () => ended.isCompleted ? null : ended.complete(),
+                cancelOnError: true,
+              );
+          await ended.future;
+        } on ApiException catch (e) {
+          if (e.isUnauthenticated || e.isNotFound || e.status == 403) {
+            if (!cancelled) {
+              controller.addError(e);
+              await controller.close();
+            }
+            return;
           }
+        } catch (_) {
+          // A dropped connection: reconnect below.
         } finally {
-          client.close();
+          client?.close();
+          client = null;
+          subscription = null;
         }
-      } on ApiException catch (e) {
-        if (e.isUnauthenticated || e.isNotFound || e.status == 403) rethrow;
-      } catch (_) {
-        // A dropped connection mid-stream: fall through and reconnect.
+        if (cancelled) return;
+        if (!connected) failures++;
+        final wait = failures == 0 ? base : backoff(base, failures, maxBackoff);
+        emit(LiveDisconnected(wait));
+        await _sleep(wait);
       }
-      if (!connected) failures++;
-      final wait = failures == 0 ? base : backoff(base, failures, maxBackoff);
-      yield LiveDisconnected(wait);
-      await _sleep(wait);
     }
+
+    controller = StreamController<LiveUpdate>(
+      onListen: run,
+      onCancel: () {
+        cancelled = true;
+        subscription?.cancel();
+        client?.close();
+        final ended = streamEnded;
+        if (ended != null && !ended.isCompleted) ended.complete();
+      },
+    );
+    return controller.stream;
   }
 }

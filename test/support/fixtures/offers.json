@@ -1,0 +1,14 @@
+{
+    "offers": [
+        {
+            "code": "WELCOME50",
+            "description": "\u20b950 off your first order of \u20b9300 or more",
+            "firstOrderOnly": true
+        },
+        {
+            "code": "TADKA10",
+            "description": "10% off orders of \u20b9500 or more, up to \u20b9100",
+            "firstOrderOnly": false
+        }
+    ]
+}
