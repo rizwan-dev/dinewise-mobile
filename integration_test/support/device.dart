@@ -185,8 +185,8 @@ class Api {
   /// A fresh demo phone number for each sign-in.
   static String newPhone([String prefix = '93']) => '$prefix${(_phones++).toString().padLeft(8, '0')}';
 
-  /// Signs a new customer in through the API and returns the token.
-  static Future<String> customer({String name = 'Rohan Joshi'}) async {
+  /// Signs a new customer in through the API: the `/auth/otp/verify` response.
+  static Future<Json> signIn({String name = 'Rohan Joshi'}) async {
     final phone = newPhone('94');
     final (_, otp) = await call('POST', '/auth/otp', body: {'phone': phone});
     final (_, verified) = await call(
@@ -194,8 +194,12 @@ class Api {
       '/auth/otp/verify',
       body: {'phone': phone, 'code': otp!['demoCode'], 'name': name},
     );
-    return verified!['accessToken']! as String;
+    return verified!;
   }
+
+  /// Signs a new customer in through the API and returns the token.
+  static Future<String> customer({String name = 'Rohan Joshi'}) async =>
+      (await signIn(name: name))['accessToken']! as String;
 
   /// Places an order as another customer and returns its code.
   static Future<String> order({
@@ -222,6 +226,17 @@ class Api {
     );
     if (status != 201) throw TestFailure('order: $status $json');
     return (json!['order']! as Json)['code']! as String;
+  }
+
+  /// Waits until [code] is on the board's live columns (not "Scheduled for later").
+  static Future<void> waitOnBoardNow(String code) async {
+    final end = DateTime.now().add(const Duration(seconds: 20));
+    while (DateTime.now().isBefore(end)) {
+      final (_, board) = await call('GET', '/kitchen/board', token: await staffToken());
+      if ((board!['current']! as List).any((t) => (t as Json)['code'] == code)) return;
+      await Future<void>.delayed(const Duration(milliseconds: 700));
+    }
+    throw TestFailure('$code is not on the live board');
   }
 
   static Future<String> orderStatus(String code) async {

@@ -67,7 +67,10 @@ class _StaffSignInScreenState extends ConsumerState<StaffSignInScreen> {
         child: Center(
           child: ConstrainedBox(
             constraints: const BoxConstraints(maxWidth: 460),
+            // Kitchen tablets are shared: autofill may fill the staff login, but the app does not
+            // offer to save it to the device.
             child: AutofillGroup(
+              onDisposeAction: AutofillContextAction.cancel,
               child: ListView(
                 padding: const EdgeInsets.fromLTRB(24, 0, 24, 24),
                 children: [
