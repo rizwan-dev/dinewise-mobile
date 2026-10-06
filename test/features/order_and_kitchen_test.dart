@@ -81,7 +81,8 @@ void main() {
       // The server ends the stream: the app reconnects after 3 s and fetches again.
       await api.endStreams();
       api.move('TL-ABCD24', 'COLLECTED');
-      await tester.pump(const Duration(seconds: 4));
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pump(const Duration(seconds: 3));
       await settle(tester);
       expect(find.text('Collected'), findsWidgets);
       expect(find.textContaining('Enjoy your meal'), findsOneWidget);

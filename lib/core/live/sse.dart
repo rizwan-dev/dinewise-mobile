@@ -96,13 +96,12 @@ class SseParser {
   }
 
   /// Parses a stream of bytes into messages. Line endings may be `\n`, `\r\n` or `\r`.
-  Stream<SseEvent> bind(Stream<List<int>> bytes) async* {
-    final lines = bytes.transform(utf8.decoder).transform(const LineSplitter());
-    await for (final line in lines) {
-      final event = addLine(line);
-      if (event != null) yield event;
-    }
-  }
+  Stream<SseEvent> bind(Stream<List<int>> bytes) => bytes
+      .transform(utf8.decoder)
+      .transform(const LineSplitter())
+      .map(addLine)
+      .where((e) => e != null)
+      .cast<SseEvent>();
 }
 
 /// What a [LiveStream] reports: connection changes as well as the server's messages.
@@ -209,9 +208,11 @@ class LiveStream {
         } catch (_) {
           // A dropped connection: reconnect below.
         } finally {
+          // Already done (or cancelled) by now; cancelling only releases it.
+          unawaited(subscription?.cancel());
+          subscription = null;
           client?.close();
           client = null;
-          subscription = null;
         }
         if (cancelled) return;
         if (!connected) failures++;
@@ -223,12 +224,18 @@ class LiveStream {
 
     controller = StreamController<LiveUpdate>(
       onListen: run,
-      onCancel: () {
+      onCancel: () async {
         cancelled = true;
-        subscription?.cancel();
-        client?.close();
         final ended = streamEnded;
         if (ended != null && !ended.isCompleted) ended.complete();
+        // Stop listening first, then drop the connection: closing the client while the response
+        // is still being listened to would surface "Connection closed" as an uncaught error.
+        final sub = subscription;
+        final open = client;
+        subscription = null;
+        client = null;
+        await sub?.cancel();
+        open?.close();
       },
     );
     return controller.stream;
