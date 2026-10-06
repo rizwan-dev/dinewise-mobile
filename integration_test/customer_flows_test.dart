@@ -312,7 +312,7 @@ void main() {
     await tapOn(tester, find.text('Sign in to checkout'));
     await signInWithDemoCode(tester);
     // The host watches for this note, stops the API for 20 s, then starts it again.
-    await typeInto(tester, find.widgetWithText(TextFormField, 'Less oil please'), 'offline check');
+    await typeInto(tester, find.widgetWithText(TextFormField, 'Less oil please'), 'Please ring the bell');
     await tapOn(tester, find.text('Place order'));
     await waitFor(tester, find.textContaining('Order TL-'), seconds: 30);
     final code = tester.widget<Text>(find.textContaining('Order TL-')).data!.replaceFirst('Order ', '');
