@@ -148,6 +148,7 @@ void main() {
     router.go(Routes.kitchen);
     await tapWhenShown(tester, find.text('Try as kitchen'));
     final ticket = find.byKey(ValueKey(code));
+    await waitFor(tester, find.textContaining('Cooking'));
     // On a phone the board has tabs. After closing time an ASAP order is due tomorrow, so it
     // waits under "Later" rather than "Cooking".
     if (find.byType(TabBar).evaluate().isNotEmpty) {
