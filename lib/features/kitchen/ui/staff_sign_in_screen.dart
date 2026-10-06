@@ -41,7 +41,13 @@ class _StaffSignInScreenState extends ConsumerState<StaffSignInScreen> {
     });
     try {
       await action();
-      // The router moves on to the board once the staff session is set.
+      if (!mounted) return;
+      // Replace this screen with the board (the router only redirects screens it navigated to).
+      if (context.canPop()) {
+        context.pushReplacement(Routes.kitchen);
+      } else {
+        context.go(Routes.kitchen);
+      }
     } on ApiException catch (e) {
       if (mounted) setState(() => _error = e.message);
     } finally {

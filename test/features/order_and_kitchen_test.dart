@@ -149,6 +149,28 @@ void main() {
       await tearDownApp(tester);
     });
 
+    testWidgets('opened from the account page, staff sign-in replaces itself with the board', (tester) async {
+      await pumpApp(tester, api, location: Routes.account);
+      await tester.tap(find.text('Restaurant staff?'));
+      await settle(tester);
+      expect(find.text('Kitchen mode'), findsOneWidget);
+      await tester.tap(find.text('Try as manager'));
+      await settle(tester);
+      expect(find.textContaining('New · 0'), findsOneWidget);
+      expect(find.text('Kitchen mode'), findsNothing);
+      await tearDownApp(tester);
+    });
+
+    testWidgets('an open order screen goes to sign-in when the session ends', (tester) async {
+      await openCheckout(tester, fulfilment: Fulfilment.pickup);
+      await placeOrder(tester);
+      final container = ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+      await container.read(customerSessionProvider.notifier).clear();
+      await settle(tester);
+      expect(find.text('Send code'), findsOneWidget);
+      await tearDownApp(tester);
+    });
+
     testWidgets('wrong staff password shows the server message', (tester) async {
       await pumpApp(tester, api, location: Routes.kitchenSignIn);
       await tester.enterText(find.widgetWithText(TextField, 'Email'), 'kitchen@tadkalane.example');

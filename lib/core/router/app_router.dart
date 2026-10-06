@@ -15,6 +15,7 @@ import '../../features/orders/ui/order_screen.dart';
 import '../../features/orders/ui/orders_screen.dart';
 import '../auth/auth_providers.dart';
 import 'customer_shell.dart';
+import 'session_guard.dart';
 
 abstract final class Routes {
   static const home = '/';
@@ -85,7 +86,10 @@ final routerProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: ':code',
                     parentNavigatorKey: rootNavigatorKey,
-                    builder: (_, state) => OrderScreen(code: state.pathParameters['code']!),
+                    builder: (_, state) => CustomerGuard(
+                      location: state.uri.toString(),
+                      child: OrderScreen(code: state.pathParameters['code']!),
+                    ),
                   ),
                 ],
               ),
@@ -100,7 +104,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.checkout,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (_, _) => const CheckoutScreen(),
+        builder: (_, state) => CustomerGuard(location: state.uri.toString(), child: const CheckoutScreen()),
       ),
       GoRoute(
         path: Routes.signIn,
@@ -118,12 +122,12 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: Routes.kitchen,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (_, _) => const KitchenBoardScreen(),
+        builder: (_, _) => const StaffGuard(child: KitchenBoardScreen()),
       ),
       GoRoute(
         path: Routes.kitchenMenu,
         parentNavigatorKey: rootNavigatorKey,
-        builder: (_, _) => const AvailabilityScreen(),
+        builder: (_, _) => const StaffGuard(child: AvailabilityScreen()),
       ),
     ],
   );
