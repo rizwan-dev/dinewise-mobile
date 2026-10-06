@@ -29,6 +29,9 @@ class FakeApi {
   /// Every request seen, as "METHOD /path".
   final requests = <String>[];
 
+  /// When true, every request fails as if the phone were offline.
+  bool offline = false;
+
   /// When set, the next `POST /orders` fails with this code (`SLOT_FULL`…).
   String? failNextOrder;
 
@@ -85,6 +88,7 @@ class FakeApi {
   }
 
   Future<http.StreamedResponse> _handle(http.BaseRequest request, http.ByteStream bodyStream) async {
+    if (offline) throw http.ClientException('Connection refused', request.url);
     final path = request.url.path.replaceFirst('/api/v1', '');
     requests.add('${request.method} $path');
     final text = await bodyStream.bytesToString();
