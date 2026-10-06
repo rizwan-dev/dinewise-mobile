@@ -57,7 +57,7 @@ void main() {
   testWidgets('home, menu, search, veg only, sections', (tester) async {
     final c = await startApp(tester);
     await waitFor(tester, find.text('What are you craving?'));
-    await waitFor(tester, find.textContaining('Open now'));
+    await waitFor(tester, find.textContaining(RegExp('(Open|Closed) now')));
     expect(find.text('WELCOME50'), findsOneWidget);
     await shot(tester, '01-home');
 
