@@ -1,0 +1,949 @@
+{
+    "currency": "INR",
+    "sections": [
+        {
+            "id": 1,
+            "name": "Starters",
+            "slug": "starters",
+            "items": [
+                {
+                    "id": 1,
+                    "slug": "paneer-tikka",
+                    "name": "Paneer Tikka",
+                    "description": "Cottage cheese, peppers and onion, marinated in spiced yoghurt and chargrilled in the tandoor.",
+                    "pricePaise": 28000,
+                    "fromPricePaise": 28000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/paneer-tikka.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 2,
+                    "slug": "hara-bhara-kebab",
+                    "name": "Hara Bhara Kebab",
+                    "description": "Spinach, green pea and potato patties with a crisp crust. Served with mint chutney.",
+                    "pricePaise": 22000,
+                    "fromPricePaise": 22000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": null,
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 3,
+                    "slug": "chicken-tikka",
+                    "name": "Chicken Tikka",
+                    "description": "Boneless chicken thigh in a smoky red marinade, cooked over charcoal.",
+                    "pricePaise": 32000,
+                    "fromPricePaise": 32000,
+                    "veg": false,
+                    "spice": 2,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/chicken-tikka.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 4,
+                    "slug": "amritsari-fish",
+                    "name": "Amritsari Fish",
+                    "description": "Basa fillet in a carom-seed batter, fried crisp and finished with chaat masala.",
+                    "pricePaise": 36000,
+                    "fromPricePaise": 36000,
+                    "veg": false,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/amritsari-fish.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 5,
+                    "slug": "masala-papad",
+                    "name": "Masala Papad",
+                    "description": "Roasted papad topped with onion, tomato, coriander and lime.",
+                    "pricePaise": 9000,
+                    "fromPricePaise": 9000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/masala-papad.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 6,
+                    "slug": "veg-samosa",
+                    "name": "Veg Samosa",
+                    "description": "Two crisp pastries filled with spiced potato and peas, with tamarind and mint chutney.",
+                    "pricePaise": 8000,
+                    "fromPricePaise": 8000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/veg-samosa.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 7,
+                    "slug": "tandoori-chicken",
+                    "name": "Tandoori Chicken",
+                    "description": "Bone-in chicken marinated overnight in yoghurt and Kashmiri chilli, roasted in the tandoor.",
+                    "pricePaise": 0,
+                    "fromPricePaise": 30000,
+                    "veg": false,
+                    "spice": 2,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/tandoori-chicken.webp",
+                    "variants": [
+                        {
+                            "id": 1,
+                            "name": "Half",
+                            "pricePaise": 30000
+                        },
+                        {
+                            "id": 2,
+                            "name": "Full",
+                            "pricePaise": 54000
+                        }
+                    ],
+                    "addonGroups": []
+                }
+            ]
+        },
+        {
+            "id": 2,
+            "name": "Combos & Thalis",
+            "slug": "combos-and-thalis",
+            "items": [
+                {
+                    "id": 8,
+                    "slug": "tadka-lane-thali",
+                    "name": "Tadka Lane Thali",
+                    "description": "Dal makhani, paneer of the day, seasonal sabzi, jeera rice, salad, raita, pickle and a dessert.",
+                    "pricePaise": 34000,
+                    "fromPricePaise": 34000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/tadka-lane-thali.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 1,
+                            "name": "Bread",
+                            "minSelect": 1,
+                            "maxSelect": 1,
+                            "addons": [
+                                {
+                                    "id": 1,
+                                    "name": "2 Tawa roti",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 2,
+                                    "name": "Butter naan",
+                                    "pricePaise": 3000
+                                },
+                                {
+                                    "id": 3,
+                                    "name": "Laccha paratha",
+                                    "pricePaise": 4000
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 9,
+                    "slug": "butter-chicken-combo",
+                    "name": "Butter Chicken Combo",
+                    "description": "Butter chicken (half), two butter naan, jeera rice, salad and a gulab jamun.",
+                    "pricePaise": 44900,
+                    "fromPricePaise": 44900,
+                    "veg": false,
+                    "spice": 1,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/butter-chicken-combo.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 10,
+                    "slug": "paneer-combo",
+                    "name": "Paneer Combo",
+                    "description": "Paneer butter masala, dal makhani, two butter naan, jeera rice and salad.",
+                    "pricePaise": 39900,
+                    "fromPricePaise": 39900,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/paneer-combo.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 11,
+                    "slug": "biryani-combo",
+                    "name": "Biryani Combo",
+                    "description": "Chicken dum biryani (half) with raita, mirchi salan, a boiled egg and a gulab jamun.",
+                    "pricePaise": 34900,
+                    "fromPricePaise": 34900,
+                    "veg": false,
+                    "spice": 2,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/biryani-combo.webp",
+                    "variants": [],
+                    "addonGroups": []
+                }
+            ]
+        },
+        {
+            "id": 3,
+            "name": "Mains",
+            "slug": "mains",
+            "items": [
+                {
+                    "id": 12,
+                    "slug": "dal-makhani",
+                    "name": "Dal Makhani",
+                    "description": "Black lentils simmered overnight with butter and cream. Our most ordered dish.",
+                    "pricePaise": 26000,
+                    "fromPricePaise": 26000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/dal-makhani.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 13,
+                    "slug": "paneer-butter-masala",
+                    "name": "Paneer Butter Masala",
+                    "description": "Paneer in a velvety tomato, cashew and fenugreek gravy.",
+                    "pricePaise": 30000,
+                    "fromPricePaise": 30000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/paneer-butter-masala.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 14,
+                    "slug": "palak-paneer",
+                    "name": "Palak Paneer",
+                    "description": "Paneer in a smooth spinach gravy finished with garlic tadka and a little cream.",
+                    "pricePaise": 29000,
+                    "fromPricePaise": 29000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/palak-paneer.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 15,
+                    "slug": "malai-kofta",
+                    "name": "Malai Kofta",
+                    "description": "Paneer and potato dumplings in a mild, creamy cashew gravy.",
+                    "pricePaise": 31000,
+                    "fromPricePaise": 31000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": null,
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 16,
+                    "slug": "rajma-chawal",
+                    "name": "Rajma Chawal",
+                    "description": "Punjabi kidney-bean curry with steamed basmati, onion and lime. Sunday comfort.",
+                    "pricePaise": 23000,
+                    "fromPricePaise": 23000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/rajma-chawal.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 17,
+                    "slug": "egg-curry",
+                    "name": "Egg Curry",
+                    "description": "Two boiled eggs, lightly fried, in an onion-tomato masala.",
+                    "pricePaise": 24000,
+                    "fromPricePaise": 24000,
+                    "veg": false,
+                    "spice": 2,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/egg-curry.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 2,
+                            "name": "Spice level",
+                            "minSelect": 1,
+                            "maxSelect": 1,
+                            "addons": [
+                                {
+                                    "id": 4,
+                                    "name": "Mild",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 5,
+                                    "name": "Medium",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 6,
+                                    "name": "Hot",
+                                    "pricePaise": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 18,
+                    "slug": "kadai-mushroom",
+                    "name": "Kadai Mushroom",
+                    "description": "Mushroom, capsicum and onion tossed with freshly pounded kadai spices.",
+                    "pricePaise": 27000,
+                    "fromPricePaise": 27000,
+                    "veg": true,
+                    "spice": 2,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/kadai-mushroom.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 3,
+                            "name": "Spice level",
+                            "minSelect": 1,
+                            "maxSelect": 1,
+                            "addons": [
+                                {
+                                    "id": 7,
+                                    "name": "Mild",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 8,
+                                    "name": "Medium",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 9,
+                                    "name": "Hot",
+                                    "pricePaise": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 19,
+                    "slug": "butter-chicken",
+                    "name": "Butter Chicken",
+                    "description": "Tandoori chicken in the classic tomato-butter gravy, mild and rich.",
+                    "pricePaise": 38000,
+                    "fromPricePaise": 26000,
+                    "veg": false,
+                    "spice": 1,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/butter-chicken.webp",
+                    "variants": [
+                        {
+                            "id": 3,
+                            "name": "Half",
+                            "pricePaise": 26000
+                        },
+                        {
+                            "id": 4,
+                            "name": "Full",
+                            "pricePaise": 38000
+                        }
+                    ],
+                    "addonGroups": []
+                },
+                {
+                    "id": 20,
+                    "slug": "mutton-rogan-josh",
+                    "name": "Mutton Rogan Josh",
+                    "description": "Kashmiri-style slow-cooked goat with Kashmiri chilli and fennel.",
+                    "pricePaise": 46000,
+                    "fromPricePaise": 46000,
+                    "veg": false,
+                    "spice": 2,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/mutton-rogan-josh.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 4,
+                            "name": "Spice level",
+                            "minSelect": 1,
+                            "maxSelect": 1,
+                            "addons": [
+                                {
+                                    "id": 10,
+                                    "name": "Mild",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 11,
+                                    "name": "Medium",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 12,
+                                    "name": "Hot",
+                                    "pricePaise": 0
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": 4,
+            "name": "Street Favourites",
+            "slug": "street-favourites",
+            "items": [
+                {
+                    "id": 21,
+                    "slug": "chole-bhature",
+                    "name": "Chole Bhature",
+                    "description": "Spicy Pindi chole with two fluffy bhature, pickled onion and green chilli.",
+                    "pricePaise": 22000,
+                    "fromPricePaise": 22000,
+                    "veg": true,
+                    "spice": 2,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/chole-bhature.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 22,
+                    "slug": "pav-bhaji",
+                    "name": "Pav Bhaji",
+                    "description": "Buttery mashed-vegetable bhaji with two toasted pav, onion and lime.",
+                    "pricePaise": 19000,
+                    "fromPricePaise": 19000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/pav-bhaji.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 5,
+                            "name": "Extras",
+                            "minSelect": 0,
+                            "maxSelect": 2,
+                            "addons": [
+                                {
+                                    "id": 13,
+                                    "name": "Extra pav",
+                                    "pricePaise": 3000
+                                },
+                                {
+                                    "id": 14,
+                                    "name": "Cheese on top",
+                                    "pricePaise": 4000
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 23,
+                    "slug": "aloo-paratha",
+                    "name": "Aloo Paratha",
+                    "description": "Two whole-wheat parathas stuffed with spiced potato, with white butter, curd and pickle.",
+                    "pricePaise": 17000,
+                    "fromPricePaise": 17000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/aloo-paratha.webp",
+                    "variants": [],
+                    "addonGroups": []
+                }
+            ]
+        },
+        {
+            "id": 5,
+            "name": "Biryani & Rice",
+            "slug": "biryani-and-rice",
+            "items": [
+                {
+                    "id": 24,
+                    "slug": "chicken-dum-biryani",
+                    "name": "Chicken Dum Biryani",
+                    "description": "Basmati and chicken layered with saffron and fried onion, sealed and slow-cooked.",
+                    "pricePaise": 0,
+                    "fromPricePaise": 24000,
+                    "veg": false,
+                    "spice": 2,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/chicken-dum-biryani.webp",
+                    "variants": [
+                        {
+                            "id": 5,
+                            "name": "Half",
+                            "pricePaise": 24000
+                        },
+                        {
+                            "id": 6,
+                            "name": "Full",
+                            "pricePaise": 38000
+                        }
+                    ],
+                    "addonGroups": [
+                        {
+                            "id": 6,
+                            "name": "Extras",
+                            "minSelect": 0,
+                            "maxSelect": 2,
+                            "addons": [
+                                {
+                                    "id": 15,
+                                    "name": "Extra raita",
+                                    "pricePaise": 4000
+                                },
+                                {
+                                    "id": 16,
+                                    "name": "Boiled egg",
+                                    "pricePaise": 2500
+                                },
+                                {
+                                    "id": 17,
+                                    "name": "Mirchi salan",
+                                    "pricePaise": 3000
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 25,
+                    "slug": "veg-dum-biryani",
+                    "name": "Veg Dum Biryani",
+                    "description": "Seasonal vegetables and basmati, cooked dum-style with whole spices.",
+                    "pricePaise": 0,
+                    "fromPricePaise": 20000,
+                    "veg": true,
+                    "spice": 1,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/veg-dum-biryani.webp",
+                    "variants": [
+                        {
+                            "id": 7,
+                            "name": "Half",
+                            "pricePaise": 20000
+                        },
+                        {
+                            "id": 8,
+                            "name": "Full",
+                            "pricePaise": 32000
+                        }
+                    ],
+                    "addonGroups": [
+                        {
+                            "id": 7,
+                            "name": "Extras",
+                            "minSelect": 0,
+                            "maxSelect": 2,
+                            "addons": [
+                                {
+                                    "id": 18,
+                                    "name": "Extra raita",
+                                    "pricePaise": 4000
+                                },
+                                {
+                                    "id": 19,
+                                    "name": "Mirchi salan",
+                                    "pricePaise": 3000
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 26,
+                    "slug": "jeera-rice",
+                    "name": "Jeera Rice",
+                    "description": "Basmati tempered with cumin and ghee.",
+                    "pricePaise": 16000,
+                    "fromPricePaise": 16000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/jeera-rice.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 27,
+                    "slug": "dal-khichdi",
+                    "name": "Dal Khichdi",
+                    "description": "Comforting moong dal and rice with a ghee and garlic tadka.",
+                    "pricePaise": 19000,
+                    "fromPricePaise": 19000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/dal-khichdi.webp",
+                    "variants": [],
+                    "addonGroups": []
+                }
+            ]
+        },
+        {
+            "id": 6,
+            "name": "Breads",
+            "slug": "breads",
+            "items": [
+                {
+                    "id": 28,
+                    "slug": "butter-naan",
+                    "name": "Butter Naan",
+                    "description": "Soft leavened bread from the tandoor, brushed with butter.",
+                    "pricePaise": 6000,
+                    "fromPricePaise": 6000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/butter-naan.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 29,
+                    "slug": "garlic-naan",
+                    "name": "Garlic Naan",
+                    "description": "Naan with chopped garlic and coriander.",
+                    "pricePaise": 7500,
+                    "fromPricePaise": 7500,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/garlic-naan.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 30,
+                    "slug": "laccha-paratha",
+                    "name": "Laccha Paratha",
+                    "description": "Flaky, layered whole-wheat paratha.",
+                    "pricePaise": 7000,
+                    "fromPricePaise": 7000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/laccha-paratha.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 31,
+                    "slug": "tandoori-roti",
+                    "name": "Tandoori Roti",
+                    "description": "Whole-wheat flatbread from the clay oven.",
+                    "pricePaise": 3500,
+                    "fromPricePaise": 3500,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/tandoori-roti.webp",
+                    "variants": [],
+                    "addonGroups": []
+                }
+            ]
+        },
+        {
+            "id": 7,
+            "name": "Desserts",
+            "slug": "desserts",
+            "items": [
+                {
+                    "id": 32,
+                    "slug": "gulab-jamun",
+                    "name": "Gulab Jamun",
+                    "description": "Two warm milk dumplings in cardamom syrup.",
+                    "pricePaise": 11000,
+                    "fromPricePaise": 11000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/gulab-jamun.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 33,
+                    "slug": "rasmalai",
+                    "name": "Rasmalai",
+                    "description": "Soft chenna discs in saffron-pistachio milk.",
+                    "pricePaise": 14000,
+                    "fromPricePaise": 14000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/rasmalai.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 34,
+                    "slug": "gajar-halwa",
+                    "name": "Gajar Halwa",
+                    "description": "Slow-cooked carrot pudding with khoya. Winter special.",
+                    "pricePaise": 15000,
+                    "fromPricePaise": 15000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/gajar-halwa.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 35,
+                    "slug": "kulfi",
+                    "name": "Kulfi",
+                    "description": "Dense, slow-reduced milk ice cream.",
+                    "pricePaise": 0,
+                    "fromPricePaise": 9000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/kulfi.webp",
+                    "variants": [
+                        {
+                            "id": 9,
+                            "name": "Malai",
+                            "pricePaise": 9000
+                        },
+                        {
+                            "id": 10,
+                            "name": "Kesar pista",
+                            "pricePaise": 11000
+                        }
+                    ],
+                    "addonGroups": []
+                }
+            ]
+        },
+        {
+            "id": 8,
+            "name": "Drinks",
+            "slug": "drinks",
+            "items": [
+                {
+                    "id": 36,
+                    "slug": "sweet-lassi",
+                    "name": "Sweet Lassi",
+                    "description": "Thick churned yoghurt, lightly sweetened.",
+                    "pricePaise": 0,
+                    "fromPricePaise": 9000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/sweet-lassi.webp",
+                    "variants": [
+                        {
+                            "id": 11,
+                            "name": "Regular",
+                            "pricePaise": 9000
+                        },
+                        {
+                            "id": 12,
+                            "name": "Large",
+                            "pricePaise": 13000
+                        }
+                    ],
+                    "addonGroups": []
+                },
+                {
+                    "id": 37,
+                    "slug": "mango-lassi",
+                    "name": "Mango Lassi",
+                    "description": "Alphonso mango pulp churned with yoghurt.",
+                    "pricePaise": 0,
+                    "fromPricePaise": 12000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": true,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/mango-lassi.webp",
+                    "variants": [
+                        {
+                            "id": 13,
+                            "name": "Regular",
+                            "pricePaise": 12000
+                        },
+                        {
+                            "id": 14,
+                            "name": "Large",
+                            "pricePaise": 16000
+                        }
+                    ],
+                    "addonGroups": []
+                },
+                {
+                    "id": 38,
+                    "slug": "cold-coffee",
+                    "name": "Cold Coffee",
+                    "description": "Blended with milk and ice; add a scoop of vanilla ice cream if you like.",
+                    "pricePaise": 14000,
+                    "fromPricePaise": 14000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/cold-coffee.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 8,
+                            "name": "Extras",
+                            "minSelect": 0,
+                            "maxSelect": 1,
+                            "addons": [
+                                {
+                                    "id": 20,
+                                    "name": "Ice cream scoop",
+                                    "pricePaise": 4000
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 39,
+                    "slug": "masala-chaas",
+                    "name": "Masala Chaas",
+                    "description": "Spiced buttermilk with roasted cumin and mint.",
+                    "pricePaise": 7000,
+                    "fromPricePaise": 7000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/masala-chaas.webp",
+                    "variants": [],
+                    "addonGroups": []
+                },
+                {
+                    "id": 40,
+                    "slug": "fresh-lime-soda",
+                    "name": "Fresh Lime Soda",
+                    "description": "Sweet, salted or mixed.",
+                    "pricePaise": 8000,
+                    "fromPricePaise": 8000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/fresh-lime-soda.webp",
+                    "variants": [],
+                    "addonGroups": [
+                        {
+                            "id": 9,
+                            "name": "Style",
+                            "minSelect": 1,
+                            "maxSelect": 1,
+                            "addons": [
+                                {
+                                    "id": 21,
+                                    "name": "Sweet",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 22,
+                                    "name": "Salted",
+                                    "pricePaise": 0
+                                },
+                                {
+                                    "id": 23,
+                                    "name": "Mixed",
+                                    "pricePaise": 0
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "id": 41,
+                    "slug": "masala-chai",
+                    "name": "Masala Chai",
+                    "description": "Strong tea brewed with ginger and cardamom.",
+                    "pricePaise": 5000,
+                    "fromPricePaise": 5000,
+                    "veg": true,
+                    "spice": 0,
+                    "bestseller": false,
+                    "available": true,
+                    "photoUrl": "http://localhost:8082/menu/masala-chai.webp",
+                    "variants": [],
+                    "addonGroups": []
+                }
+            ]
+        }
+    ]
+}
