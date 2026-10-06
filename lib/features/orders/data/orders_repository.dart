@@ -57,11 +57,13 @@ class OrderNotifier extends AsyncNotifier<Order> {
   Future<Order> build() => _repo.get(code);
 
   /// Fetches again without showing a loading state (live updates, pull to refresh).
-  Future<void> refreshQuietly() async {
+  /// Returns the error when the fetch failed (the last good data is kept), or null.
+  Future<Object?> refreshQuietly() async {
     final result = await AsyncValue.guard(() => _repo.get(code));
-    if (!ref.mounted) return;
+    if (!ref.mounted) return null;
     // Keep showing the last good order if a refresh fails; the live stream will try again.
     if (result.hasValue || !state.hasValue) state = result;
+    return result.error;
   }
 
   /// Cancels the order (allowed while it is `PLACED`). Throws [ApiException] on refusal.

@@ -33,6 +33,15 @@ void showMessage(BuildContext context, String text, {bool error = false}) {
     );
 }
 
+/// Runs a pull-to-refresh and says so when it fails; the screen keeps what it had.
+Future<void> refreshOrSay(BuildContext context, Future<Object?> Function() refresh) async {
+  try {
+    await refresh();
+  } on Object catch (e) {
+    if (context.mounted) showMessage(context, errorText(e), error: true);
+  }
+}
+
 /// A friendly full-area message with an optional action: empty lists, errors, signed out.
 class MessageView extends StatelessWidget {
   const MessageView({

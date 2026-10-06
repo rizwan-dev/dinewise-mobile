@@ -113,7 +113,11 @@ class CartBar extends ConsumerWidget {
                 shadowColor: Colors.black38,
                 child: InkWell(
                   borderRadius: BorderRadius.circular(18),
-                  onTap: () => context.push(Routes.cart),
+                  onTap: () {
+                    // Leave the keyboard closed when coming back.
+                    FocusManager.instance.primaryFocus?.unfocus();
+                    context.push(Routes.cart);
+                  },
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(minHeight: 56),
                     child: Padding(

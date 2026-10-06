@@ -38,7 +38,7 @@ class OrdersScreen extends ConsumerWidget {
               ),
             )
           : RefreshIndicator(
-              onRefresh: () => ref.refresh(myOrdersProvider.future),
+              onRefresh: () => refreshOrSay(context, () => ref.refresh(myOrdersProvider.future)),
               child: switch (orders) {
                 AsyncValue(:final value?) when value.isEmpty => ListView(
                   children: [
@@ -150,7 +150,7 @@ class _OrderTile extends StatelessWidget {
                         [
                           order.fulfilment == Fulfilment.delivery ? 'Delivery' : 'Pickup',
                           if (!order.isFinal && order.readyBy != null)
-                            'by ${formatTime(order.readyBy!)}'
+                            'by ${formatDayAndTime(order.readyBy!, now: now).replaceFirst('Today, ', '')}'
                           else
                             formatAgo(order.createdAt, now: now),
                         ].join(' · '),

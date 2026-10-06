@@ -271,7 +271,11 @@ class _TicketList extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return RefreshIndicator(
-      onRefresh: () => ref.read(boardProvider.notifier).refreshQuietly(),
+      onRefresh: () => refreshOrSay(context, () async {
+        final error = await ref.read(boardProvider.notifier).refreshQuietly();
+        if (error != null) throw error;
+        return null;
+      }),
       child: tickets.isEmpty
           ? ListView(
               padding: padding,

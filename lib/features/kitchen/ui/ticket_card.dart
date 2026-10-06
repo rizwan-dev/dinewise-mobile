@@ -44,6 +44,7 @@ class _TicketCardState extends ConsumerState<TicketCard> {
     final reason = await showModalBottomSheet<String>(
       context: context,
       isScrollControlled: true,
+      useRootNavigator: true,
       useSafeArea: true,
       builder: (_) => _RejectSheet(code: widget.ticket.code, reasons: widget.rejectReasons),
     );

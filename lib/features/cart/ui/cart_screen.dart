@@ -71,7 +71,7 @@ class CartScreen extends ConsumerWidget {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () async => ref.refresh(quoteProvider.future),
+        onRefresh: () => refreshOrSay(context, () => ref.refresh(quoteProvider.future)),
         child: ListView(
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           children: [

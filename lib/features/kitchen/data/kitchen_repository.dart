@@ -86,10 +86,11 @@ class BoardNotifier extends AsyncNotifier<Board> {
   }
 
   /// Fetches again without a loading state, and signals any order that just arrived.
-  Future<void> refreshQuietly() async {
+  /// Returns the error when the fetch failed (the last good data is kept), or null.
+  Future<Object?> refreshQuietly() async {
     final before = state.value?.codes;
     final result = await AsyncValue.guard(_repo.board);
-    if (!ref.mounted) return;
+    if (!ref.mounted) return null;
     if (result.hasValue || !state.hasValue) state = result;
     final after = result.value;
     if (before != null && after != null) {
@@ -98,6 +99,7 @@ class BoardNotifier extends AsyncNotifier<Board> {
           after.later.where((t) => !before.contains(t.code)).length;
       if (arrived > 0) ref.read(newOrderSignalProvider.notifier).bump();
     }
+    return result.error;
   }
 
   /// Moves an order on, then refreshes. A `409` (someone else moved it) refreshes too and is

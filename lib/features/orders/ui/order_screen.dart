@@ -58,7 +58,11 @@ class OrderScreen extends ConsumerWidget {
       ),
       body: switch (order) {
         AsyncValue(:final value?) => RefreshIndicator(
-          onRefresh: () => ref.read(orderProvider(code).notifier).refreshQuietly(),
+          onRefresh: () => refreshOrSay(context, () async {
+            final error = await ref.read(orderProvider(code).notifier).refreshQuietly();
+            if (error != null) throw error;
+            return null;
+          }),
           child: _OrderBody(order: value),
         ),
         AsyncValue(:final error?) => ErrorView(

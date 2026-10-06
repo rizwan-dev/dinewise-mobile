@@ -24,6 +24,7 @@ Future<String?> showSlotPicker(
 }) => showModalBottomSheet<String>(
   context: context,
   isScrollControlled: true,
+  useRootNavigator: true,
   useSafeArea: true,
   builder: (_) => _SlotPicker(options: options, current: current, now: now),
 );

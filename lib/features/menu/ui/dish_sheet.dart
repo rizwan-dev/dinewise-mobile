@@ -14,13 +14,18 @@ import '../data/dish_choice.dart';
 import '../data/menu.dart';
 
 /// Opens the dish sheet: photo, description, size, add-ons, quantity and a live price.
-Future<void> showDishSheet(BuildContext context, Dish dish) => showModalBottomSheet<void>(
-  context: context,
-  isScrollControlled: true,
-  useSafeArea: true,
-  showDragHandle: false,
-  builder: (_) => DishSheet(dish: dish),
-);
+Future<void> showDishSheet(BuildContext context, Dish dish) {
+  // Close the keyboard, and do not hand focus back to the search box when the sheet closes.
+  FocusManager.instance.primaryFocus?.unfocus();
+  return showModalBottomSheet<void>(
+    context: context,
+    isScrollControlled: true,
+    useRootNavigator: true,
+    useSafeArea: true,
+    showDragHandle: false,
+    builder: (_) => DishSheet(dish: dish),
+  );
+}
 
 /// Adds [line] to the cart and says what happened.
 void addToCart(BuildContext context, WidgetRef ref, CartLine line) {

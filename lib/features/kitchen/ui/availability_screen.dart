@@ -56,7 +56,7 @@ class _AvailabilityScreenState extends ConsumerState<AvailabilityScreen> {
     final sections = menu.filter(query: _query);
     final soldOut = menu.dishes.where((d) => !d.available).length;
     return RefreshIndicator(
-      onRefresh: () => ref.refresh(menuProvider.future),
+      onRefresh: () => refreshOrSay(context, () => ref.refresh(menuProvider.future)),
       child: ListView(
         padding: const EdgeInsets.only(bottom: 32),
         children: [

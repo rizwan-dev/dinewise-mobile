@@ -49,7 +49,7 @@ class HomeScreen extends ConsumerWidget {
       body: SafeArea(
         bottom: false,
         child: RefreshIndicator(
-          onRefresh: () => _refresh(ref),
+          onRefresh: () => refreshOrSay(context, () => _refresh(ref)),
           child: CustomScrollView(
             slivers: [
               SliverToBoxAdapter(child: _TopBar(restaurant: restaurant.value)),

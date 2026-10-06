@@ -143,10 +143,11 @@ class _MenuScreenState extends ConsumerState<MenuScreen> {
     if (_pendingJump != null) WidgetsBinding.instance.addPostFrameCallback((_) => _consumePendingJump());
 
     return RefreshIndicator(
-      onRefresh: () => ref.refresh(menuProvider.future),
+      onRefresh: () => refreshOrSay(context, () => ref.refresh(menuProvider.future)),
       edgeOffset: 140,
       child: CustomScrollView(
         controller: _scroll,
+        keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
         slivers: [
           SliverToBoxAdapter(
             child: _Header(
@@ -272,6 +273,8 @@ class _Header extends StatelessWidget {
             builder: (context, value, _) => TextField(
               controller: search,
               onChanged: onQuery,
+              onTapOutside: (_) => FocusManager.instance.primaryFocus?.unfocus(),
+              onSubmitted: (_) => FocusManager.instance.primaryFocus?.unfocus(),
               textInputAction: TextInputAction.search,
               decoration: InputDecoration(
                 hintText: 'Search dishes',
