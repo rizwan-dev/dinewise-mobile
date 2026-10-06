@@ -17,23 +17,36 @@ It talks only to the Dinewise JSON API (`/api/v1`) of the
 
 ## Screenshots
 
-Android (Pixel 7 emulator, against the local stack and the public demo):
+Taken from the app running against the local stack (Android: Pixel 7 emulator; iOS: iPhone 17 Pro and
+iPad Pro 13-inch simulators).
 
-| Home | Menu | Dish sheet | Cart and bill |
-| --- | --- | --- | --- |
-| ![Home](docs/screenshots/android/01-home.png) | ![Menu, search and veg only](docs/screenshots/android/02-menu-search-veg.png) | ![Dish sheet](docs/screenshots/android/03-dish-sheet.png) | ![Cart](docs/screenshots/android/04-cart-bill.png) |
+<table>
+<tr><th></th><th>Android</th><th>iOS</th></tr>
+<tr><td>Home</td><td><img src="docs/screenshots/android/01-home.png" width="260" alt="Home, Android"></td><td><img src="docs/screenshots/ios/01-home.png" width="260" alt="Home, iOS"></td></tr>
+<tr><td>Menu: search and veg only</td><td><img src="docs/screenshots/android/02-menu-search-veg.png" width="260" alt="Menu: search and veg only, Android"></td><td><img src="docs/screenshots/ios/02-menu-search-veg.png" width="260" alt="Menu: search and veg only, iOS"></td></tr>
+<tr><td>Dish sheet: sizes and add-ons</td><td><img src="docs/screenshots/android/03-dish-sheet.png" width="260" alt="Dish sheet: sizes and add-ons, Android"></td><td><img src="docs/screenshots/ios/03-dish-sheet.png" width="260" alt="Dish sheet: sizes and add-ons, iOS"></td></tr>
+<tr><td>Cart and the server's bill</td><td><img src="docs/screenshots/android/04-cart-bill.png" width="260" alt="Cart and the server's bill, Android"></td><td><img src="docs/screenshots/ios/04-cart-bill.png" width="260" alt="Cart and the server's bill, iOS"></td></tr>
+<tr><td>A coupon that does not apply</td><td><img src="docs/screenshots/android/05-cart-coupon-error.png" width="260" alt="A coupon that does not apply, Android"></td><td><img src="docs/screenshots/ios/05-cart-coupon-error.png" width="260" alt="A coupon that does not apply, iOS"></td></tr>
+<tr><td>ASAP or a time slot</td><td><img src="docs/screenshots/android/06-slot-picker.png" width="260" alt="ASAP or a time slot, Android"></td><td><img src="docs/screenshots/ios/06-slot-picker.png" width="260" alt="ASAP or a time slot, iOS"></td></tr>
+<tr><td>Sign in with the demo code</td><td><img src="docs/screenshots/android/07-sign-in-demo-code.png" width="260" alt="Sign in with the demo code, Android"></td><td><img src="docs/screenshots/ios/07-sign-in-demo-code.png" width="260" alt="Sign in with the demo code, iOS"></td></tr>
+<tr><td>Checkout, cash</td><td><img src="docs/screenshots/android/08-checkout.png" width="260" alt="Checkout, cash, Android"></td><td><img src="docs/screenshots/ios/08-checkout.png" width="260" alt="Checkout, cash, iOS"></td></tr>
+<tr><td>Order followed live</td><td><img src="docs/screenshots/android/09-order-live.png" width="260" alt="Order followed live, Android"></td><td><img src="docs/screenshots/ios/09-order-live.png" width="260" alt="Order followed live, iOS"></td></tr>
+<tr><td>My orders</td><td><img src="docs/screenshots/android/10-my-orders.png" width="260" alt="My orders, Android"></td><td><img src="docs/screenshots/ios/10-my-orders.png" width="260" alt="My orders, iOS"></td></tr>
+<tr><td>A slot that just filled up</td><td><img src="docs/screenshots/android/17-slot-full.png" width="260" alt="A slot that just filled up, Android"></td><td><img src="docs/screenshots/ios/17-slot-full.png" width="260" alt="A slot that just filled up, iOS"></td></tr>
+<tr><td>Sold out on the menu</td><td><img src="docs/screenshots/android/15-menu-sold-out.png" width="260" alt="Sold out on the menu, Android"></td><td><img src="docs/screenshots/ios/15-menu-sold-out.png" width="260" alt="Sold out on the menu, iOS"></td></tr>
+<tr><td>Offline: reconnecting</td><td><img src="docs/screenshots/android/19-reconnecting.png" width="260" alt="Offline: reconnecting, Android"></td><td><img src="docs/screenshots/ios/19-reconnecting.png" width="260" alt="Offline: reconnecting, iOS"></td></tr>
+<tr><td>Offline at launch</td><td><img src="docs/screenshots/android/16-offline.png" width="260" alt="Offline at launch, Android"></td><td><img src="docs/screenshots/ios/16-offline.png" width="260" alt="Offline at launch, iOS"></td></tr>
+<tr><td>Account</td><td><img src="docs/screenshots/android/18-account.png" width="260" alt="Account, Android"></td><td><img src="docs/screenshots/ios/18-account.png" width="260" alt="Account, iOS"></td></tr>
+<tr><td>Kitchen mode sign-in</td><td><img src="docs/screenshots/android/20-staff-sign-in.png" width="260" alt="Kitchen mode sign-in, Android"></td><td><img src="docs/screenshots/ios/20-staff-sign-in.png" width="260" alt="Kitchen mode sign-in, iOS"></td></tr>
+<tr><td>Kitchen board on a phone</td><td><img src="docs/screenshots/android/11-kitchen-board-phone.png" width="260" alt="Kitchen board on a phone, Android"></td><td><img src="docs/screenshots/ios/11-kitchen-board-phone.png" width="260" alt="Kitchen board on a phone, iOS"></td></tr>
+<tr><td>Reject with a reason</td><td><img src="docs/screenshots/android/13-kitchen-reject.png" width="260" alt="Reject with a reason, Android"></td><td><img src="docs/screenshots/ios/13-kitchen-reject.png" width="260" alt="Reject with a reason, iOS"></td></tr>
+<tr><td>Mark a dish sold out</td><td><img src="docs/screenshots/android/14-kitchen-sold-out.png" width="260" alt="Mark a dish sold out, Android"></td><td><img src="docs/screenshots/ios/14-kitchen-sold-out.png" width="260" alt="Mark a dish sold out, iOS"></td></tr>
+</table>
 
-| Sign in (demo code) | Checkout | Live order | My orders |
-| --- | --- | --- | --- |
-| ![Sign in](docs/screenshots/android/07-sign-in-demo-code.png) | ![Checkout](docs/screenshots/android/08-checkout.png) | ![Order tracking](docs/screenshots/android/09-order-live.png) | ![My orders](docs/screenshots/android/10-my-orders.png) |
+Kitchen board on a tablet: Android in landscape, and the iPad Pro.
 
-| Kitchen board | Reject with a reason | Sold out | Offline |
-| --- | --- | --- | --- |
-| ![Kitchen board](docs/screenshots/android/11-kitchen-board-phone.png) | ![Reject](docs/screenshots/android/13-kitchen-reject.png) | ![Menu availability](docs/screenshots/android/14-kitchen-sold-out.png) | ![Offline](docs/screenshots/android/16-offline.png) |
-
-Kitchen board on a tablet in landscape:
-
-![Kitchen board on a tablet](docs/screenshots/android/12-kitchen-board-tablet.png)
+<img src="docs/screenshots/android/12-kitchen-board-tablet.png" width="640" alt="Kitchen board on an Android tablet">
+<img src="docs/screenshots/ios/12-kitchen-board-tablet.png" width="420" alt="Kitchen board on an iPad">
 
 ## Run it
 
@@ -65,8 +78,14 @@ exception for `localhost` alone. Release builds talk HTTPS.
 flutter analyze                                   # zero issues, strict lints
 dart format --set-exit-if-changed lib test integration_test
 flutter test                                      # unit + widget tests
-flutter test integration_test \
-  --dart-define=API_BASE_URL=http://10.0.2.2:8082/api/v1   # the happy path on a device
+
+# On a device or simulator, against a running API (the local stack, or the demo)
+flutter test integration_test/app_flow_test.dart -d <device> \
+  --dart-define=API_BASE_URL=http://10.0.2.2:8082/api/v1   # localhost on the iOS simulator
+flutter test integration_test/customer_flows_test.dart -d <device> --dart-define=API_BASE_URL=…
+flutter test integration_test/kitchen_flows_test.dart -d <device> --dart-define=API_BASE_URL=…
+flutter test integration_test/offline_start_test.dart -d <device> \
+  --dart-define=API_BASE_URL=http://localhost:9/api/v1     # nothing listening: offline
 ```
 
 - **Unit tests** cover money formatting (Indian digit grouping, paise), times in Asia/Kolkata,
@@ -79,9 +98,31 @@ flutter test integration_test \
   sheet, the cart and bill, coupon errors, quote problems, slots, sign-in, checkout, a full slot,
   live order tracking (including a dropped stream), cancel, the kitchen board on phone and tablet,
   every move, reject, a stale move, sold out, staff sign-out, and a `401` dropping the session.
-- **The integration test** (`integration_test/app_flow_test.dart`) drives the real app against a
-  running API: menu, cart, sign in with the demo code, a cash order, the kitchen starting it
-  (the customer's screen changes without a refresh), and kitchen mode marking it ready.
+- **Device suites** (`integration_test/`) drive the real app on an Android emulator or an iOS
+  simulator against a running API. Whatever another device would do (the kitchen moving an
+  order, a dish going sold out, eight other customers filling a slot, a sign-out elsewhere) is
+  done straight on the API, and the app has to notice.
+  - `app_flow_test.dart`: menu, cart, demo-code sign-in, a cash order, the kitchen starting it
+    (the customer's screen changes without a refresh), and kitchen mode marking it ready.
+  - `customer_flows_test.dart`: home and sections, search and veg only, the dish sheet's limits
+    and live price, the cart (steppers, pincodes, good and bad coupons, pickup, slots), sign-in
+    errors, cash orders for pickup and to a new address, live tracking, My orders, cancel, a
+    sold-out dish, a full slot, a session revoked elsewhere (`401`), sign-out, and losing the API
+    while following an order (`OFFLINE_CHECK=true`; the host stops the API for 20 seconds).
+  - `kitchen_flows_test.dart`: staff sign-in errors and sign-out, the demo buttons, new orders
+    arriving live, every move (Start cooking, Mark ready, Collected, Out for delivery,
+    Delivered), reject with a one-tap and a typed reason, the sold-out switch, and the staff and
+    customer sessions staying apart. Runs on phones (tabs) and tablets (columns).
+  - `offline_start_test.dart`: launching with no API to reach.
+
+  `tool/device_suite.py` runs a suite and saves a device screenshot at each `shot()` in the test
+  (that is how `docs/screenshots/` is made). It can also stop the API mid-run for the offline
+  check and, after closing time, bring the run's ASAP orders forward in the local database so
+  they reach the kitchen's live columns instead of "Scheduled for later".
+
+Verified on Android (Pixel 7 emulator, Android 13) and iOS (iPhone 17 Pro, iPad Air 11-inch and
+iPad Pro 13-inch simulators, iOS 26.3): every suite passes against the local stack, and the
+end-to-end test also passes against the public demo API on both platforms.
 
 CI (GitHub Actions) runs format, analyze (infos fail the build), the tests with coverage, and an
 Android debug build.
@@ -151,6 +192,9 @@ Things found while building against the v1 contract:
 - `/kitchen/board` has no "today" boundary: on a local stack left running overnight, yesterday's
   unfinished orders stay on the board (shown as "1 d late"). The public demo resets itself, so
   it does not show there.
+- After closing time an ASAP order is due at the next opening, so it shows under "Scheduled for
+  later" on the board until an hour before then. That is the contract working as written; it
+  only matters when testing the kitchen at night.
 - The server closes idle keep-alive connections after a few seconds, which can surface as
   "Connection closed before full header was received" on the next request over a reused
   connection. The client retries once in exactly that case (the server never saw the request).

@@ -17,6 +17,8 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:http/http.dart' as http;
 import 'package:integration_test/integration_test.dart';
 
+import 'support/device.dart' as device;
+
 void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
@@ -145,11 +147,24 @@ void main() {
     // Then kitchen mode in the app marks it ready.
     router.go(Routes.kitchen);
     await tapWhenShown(tester, find.text('Try as kitchen'));
-    await tapWhenShown(tester, find.textContaining('Cooking ·'));
-    final ticket = find.ancestor(of: find.text(code), matching: find.byType(AnimatedContainer));
-    await tester.scrollUntilVisible(find.text(code), 300, scrollable: find.byType(Scrollable).last);
+    final ticket = find.byKey(ValueKey(code));
+    await waitFor(tester, find.textContaining('Cooking'));
+    // On a phone the board has tabs. After closing time an ASAP order is due tomorrow, so it
+    // waits under "Later" rather than "Cooking".
+    if (find.byType(TabBar).evaluate().isNotEmpty) {
+      await tapWhenShown(tester, find.textContaining('Cooking ·'));
+      await device.pause(tester, 1500);
+      if (ticket.evaluate().isEmpty && find.textContaining('Later ·').evaluate().isNotEmpty) {
+        await tapWhenShown(tester, find.textContaining('Later ·'));
+      }
+    }
+    await device.reveal(tester, ticket);
     await tapWhenShown(tester, find.descendant(of: ticket, matching: find.text('Mark ready')));
-    await waitFor(tester, find.textContaining('Ready · '));
+    final end = DateTime.now().add(const Duration(seconds: 15));
+    while ((await device.Api.orderStatus(code)) != 'READY') {
+      if (DateTime.now().isAfter(end)) throw TestFailure('$code was not marked ready');
+      await device.pause(tester, 500);
+    }
 
     // Back as the customer: Ready.
     router.go(Routes.order(code));

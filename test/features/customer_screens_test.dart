@@ -45,6 +45,21 @@ void main() {
       await tearDownApp(tester);
     });
 
+    testWidgets('offline at launch: the offline screen, and Try again fails calmly', (tester) async {
+      api.offline = true;
+      await pumpApp(tester, api);
+      expect(find.text('You seem to be offline'), findsOneWidget);
+      await tester.tap(find.text('Try again'));
+      await settle(tester);
+      expect(tester.takeException(), isNull);
+      expect(find.text('You seem to be offline'), findsOneWidget);
+      api.offline = false;
+      await tester.tap(find.text('Try again'));
+      await settle(tester);
+      expect(find.text('What are you craving?'), findsOneWidget);
+      await tearDownApp(tester);
+    });
+
     testWidgets('"Use code" puts the coupon in the cart', (tester) async {
       final container = await pumpApp(tester, api);
       await tester.tap(find.text('Use code').first);

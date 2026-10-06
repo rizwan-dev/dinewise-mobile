@@ -40,7 +40,10 @@ class HomeScreen extends ConsumerWidget {
     if (restaurant.hasError && !restaurant.hasValue) {
       return Scaffold(
         body: SafeArea(
-          child: ErrorView(error: restaurant.error, onRetry: () => _refresh(ref)),
+          child: ErrorView(
+            error: restaurant.error,
+            onRetry: () => refreshOrSay(context, () => _refresh(ref)),
+          ),
         ),
       );
     }
