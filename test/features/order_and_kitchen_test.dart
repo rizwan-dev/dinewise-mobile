@@ -61,7 +61,7 @@ void main() {
       expect(container.read(cartProvider).isEmpty, isTrue);
       expect(api.addresses, hasLength(1));
       await tearDownApp(tester);
-    });
+    }, variant: TargetPlatformVariant.mobile());
 
     testWidgets('the order screen updates live when the kitchen moves the order', (tester) async {
       await openCheckout(tester, fulfilment: Fulfilment.pickup);
@@ -87,7 +87,7 @@ void main() {
       expect(find.text('Collected'), findsWidgets);
       expect(find.textContaining('Enjoy your meal'), findsOneWidget);
       await tearDownApp(tester);
-    });
+    }, variant: TargetPlatformVariant.mobile());
 
     testWidgets('cancels while the order is still new', (tester) async {
       await openCheckout(tester, fulfilment: Fulfilment.pickup);
@@ -225,7 +225,7 @@ void main() {
       expect(api.order('TL-ABCD24')['status'], 'COLLECTED');
       expect(find.text('Ready · 0'), findsOneWidget);
       await tearDownApp(tester);
-    });
+    }, variant: TargetPlatformVariant.mobile());
 
     testWidgets('rejects with a one-tap reason', (tester) async {
       await _placeViaApi(api);
