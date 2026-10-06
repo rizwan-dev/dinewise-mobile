@@ -240,6 +240,27 @@ void main() {
       await tearDownApp(tester);
     });
 
+    testWidgets('the reject sheet fits above the keyboard on a small phone', (tester) async {
+      await _placeViaApi(api);
+      await pumpApp(
+        tester,
+        api,
+        staff: signedInKitchen,
+        location: Routes.kitchen,
+        size: const Size(375, 667),
+      );
+      await tester.tap(find.text('Reject'));
+      await settle(tester);
+      tester.view.viewInsets = const FakeViewPadding(bottom: 600); // 300 logical px of keyboard
+      await settle(tester);
+      expect(tester.takeException(), isNull);
+      await tester.ensureVisible(find.text('Reject with this reason'));
+      await settle(tester, frames: 3);
+      expect(find.text('Reject with this reason').hitTestable(), findsOneWidget);
+      tester.view.resetViewInsets();
+      await tearDownApp(tester);
+    });
+
     testWidgets('a move that already happened says so and refreshes', (tester) async {
       await _placeViaApi(api);
       await pumpApp(tester, api, staff: signedInKitchen, location: Routes.kitchen);

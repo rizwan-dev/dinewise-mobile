@@ -275,7 +275,9 @@ class _RejectSheetState extends State<_RejectSheet> {
   }
 
   @override
-  Widget build(BuildContext context) => Padding(
+  // Scrolls, so the typed-reason field and its button stay reachable above the keyboard on a
+  // phone.
+  Widget build(BuildContext context) => SingleChildScrollView(
     padding: EdgeInsets.fromLTRB(20, 0, 20, 20 + MediaQuery.viewInsetsOf(context).bottom),
     child: Column(
       mainAxisSize: MainAxisSize.min,

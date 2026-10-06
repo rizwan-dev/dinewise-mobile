@@ -53,6 +53,16 @@ void main() {
 
   /// Taps [button] on the ticket for [code].
   Future<void> press(WidgetTester tester, String code, String button) async {
+    for (var attempt = 1; ; attempt++) {
+      try {
+        await waitFor(tester, ticket(code), seconds: 8);
+        break;
+      } on TestFailure {
+        if (attempt == 3) rethrow;
+        // The order was brought forward behind the board's back (no event): pull to refresh.
+        await pullToRefresh(tester);
+      }
+    }
     await reveal(tester, ticket(code));
     final target = find.descendant(of: ticket(code), matching: find.text(button));
     await tester.ensureVisible(target);
