@@ -10,6 +10,7 @@ import '../../../core/format/time.dart';
 import '../../../core/theme/app_theme.dart';
 import '../../../core/widgets/states.dart';
 import '../../cart/data/cart.dart';
+import '../../orders/data/order.dart';
 import '../data/board.dart';
 import '../data/kitchen_repository.dart';
 
@@ -93,7 +94,13 @@ class _TicketCardState extends ConsumerState<TicketCard> {
                       ),
                     ],
                   ),
-                  _DueBadge(due: t.dueAt, now: widget.now, late: late, later: t.later),
+                  _DueBadge(
+                    due: t.dueAt,
+                    now: widget.now,
+                    late: late,
+                    later: t.later,
+                    cooking: t.status == OrderStatus.placed || t.status == OrderStatus.preparing,
+                  ),
                 ],
               ),
               const SizedBox(height: 4),
@@ -206,7 +213,16 @@ class _TicketCardState extends ConsumerState<TicketCard> {
 }
 
 class _DueBadge extends StatelessWidget {
-  const _DueBadge({required this.due, required this.now, required this.late, required this.later});
+  const _DueBadge({
+    required this.due,
+    required this.now,
+    required this.late,
+    required this.later,
+    required this.cooking,
+  });
+
+  /// Still to be cooked: the countdown matters. Once ready, only the due time is shown.
+  final bool cooking;
 
   final DateTime due;
   final DateTime now;
@@ -216,9 +232,12 @@ class _DueBadge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final palette = context.palette;
+    final when = formatDayAndTime(due, now: now).replaceFirst('Today, ', '');
     final text = later
-        ? formatDayAndTime(due, now: now)
-        : 'Due ${formatTime(due)} · ${formatDueIn(due, now: now)}';
+        ? when
+        : cooking
+        ? 'Due $when · ${formatDueIn(due, now: now)}'
+        : 'Due $when';
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
       decoration: BoxDecoration(

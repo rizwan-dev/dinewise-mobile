@@ -62,7 +62,11 @@ String formatAgo(DateTime instant, {required DateTime now}) {
 /// "in 12 min", "5 min late", "now": for kitchen due times.
 String formatDueIn(DateTime due, {required DateTime now}) {
   final minutes = due.difference(now).inSeconds / 60;
+  if (minutes >= 60) return 'in ${minutes ~/ 60} h ${(minutes % 60).floor()} min';
   if (minutes >= 1) return 'in ${minutes.floor()} min';
   if (minutes > -1) return 'now';
-  return '${(-minutes).floor()} min late';
+  final late = (-minutes).floor();
+  if (late < 60) return '$late min late';
+  if (late < 24 * 60) return '${late ~/ 60} h late';
+  return '${late ~/ (24 * 60)} d late';
 }

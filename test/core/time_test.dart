@@ -41,6 +41,9 @@ void main() {
     expect(formatDueIn(due, now: DateTime.utc(2026, 10, 5, 6, 48)), 'in 12 min');
     expect(formatDueIn(due, now: DateTime.utc(2026, 10, 5, 7, 0, 20)), 'now');
     expect(formatDueIn(due, now: DateTime.utc(2026, 10, 5, 7, 8)), '8 min late');
+    expect(formatDueIn(due, now: DateTime.utc(2026, 10, 5, 9, 30)), '2 h late');
+    expect(formatDueIn(due, now: DateTime.utc(2026, 10, 7, 7)), '2 d late');
+    expect(formatDueIn(due, now: DateTime.utc(2026, 10, 5, 5, 30)), 'in 1 h 30 min');
   });
 
   test('formatAgo', () {
