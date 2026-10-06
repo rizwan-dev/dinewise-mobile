@@ -15,6 +15,26 @@ It talks only to the Dinewise JSON API (`/api/v1`) of the
 [dinewise.riztechacademy.com](https://dinewise.riztechacademy.com). The API contract is
 [`docs/api.md`](https://github.com/rizwan-dev/dinewise/blob/main/docs/api.md) in that repository.
 
+## Screenshots
+
+Android (Pixel 7 emulator, against the local stack and the public demo):
+
+| Home | Menu | Dish sheet | Cart and bill |
+| --- | --- | --- | --- |
+| ![Home](docs/screenshots/android/01-home.png) | ![Menu, search and veg only](docs/screenshots/android/02-menu-search-veg.png) | ![Dish sheet](docs/screenshots/android/03-dish-sheet.png) | ![Cart](docs/screenshots/android/04-cart-bill.png) |
+
+| Sign in (demo code) | Checkout | Live order | My orders |
+| --- | --- | --- | --- |
+| ![Sign in](docs/screenshots/android/07-sign-in-demo-code.png) | ![Checkout](docs/screenshots/android/08-checkout.png) | ![Order tracking](docs/screenshots/android/09-order-live.png) | ![My orders](docs/screenshots/android/10-my-orders.png) |
+
+| Kitchen board | Reject with a reason | Sold out | Offline |
+| --- | --- | --- | --- |
+| ![Kitchen board](docs/screenshots/android/11-kitchen-board-phone.png) | ![Reject](docs/screenshots/android/13-kitchen-reject.png) | ![Menu availability](docs/screenshots/android/14-kitchen-sold-out.png) | ![Offline](docs/screenshots/android/16-offline.png) |
+
+Kitchen board on a tablet in landscape:
+
+![Kitchen board on a tablet](docs/screenshots/android/12-kitchen-board-tablet.png)
+
 ## Run it
 
 Flutter 3.47 (Dart 3.13).
@@ -128,6 +148,9 @@ Things found while building against the v1 contract:
 - `POST /quote` with `DELIVERY` and no pincode answers `NO_DELIVERY` ("We do not deliver to that
   pincode yet"), the same as an unserved pincode. The app does not quote delivery until a pincode
   is entered and asks for one instead.
+- `/kitchen/board` has no "today" boundary: on a local stack left running overnight, yesterday's
+  unfinished orders stay on the board (shown as "1 d late"). The public demo resets itself, so
+  it does not show there.
 - The server closes idle keep-alive connections after a few seconds, which can surface as
   "Connection closed before full header was received" on the next request over a reused
   connection. The client retries once in exactly that case (the server never saw the request).
