@@ -135,6 +135,22 @@ void main() {
       expect(find.text('TL-ABCD24'), findsOneWidget);
       await tearDownApp(tester);
     });
+
+    testWidgets('My orders is fresh when its tab is opened after the kitchen moved an order', (tester) async {
+      await openCheckout(tester, fulfilment: Fulfilment.pickup);
+      await placeOrder(tester);
+      final container = ProviderScope.containerOf(tester.element(find.byType(Scaffold).first));
+      container.read(routerProvider).go(Routes.orders);
+      await settle(tester);
+      expect(find.text('Order received'), findsOneWidget);
+      container.read(routerProvider).go(Routes.home);
+      await settle(tester);
+      api.move('TL-ABCD24', 'PREPARING');
+      await tester.tap(find.text('Orders'));
+      await settle(tester);
+      expect(find.text('Being prepared'), findsOneWidget);
+      await tearDownApp(tester);
+    });
   });
 
   group('Kitchen', () {

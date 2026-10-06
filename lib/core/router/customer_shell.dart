@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../features/cart/data/cart_providers.dart';
+import '../../features/orders/data/orders_repository.dart';
 import '../format/money.dart';
 import '../theme/app_theme.dart';
 import 'app_router.dart';
@@ -21,7 +22,11 @@ class CustomerShell extends ConsumerWidget {
 
   final StatefulNavigationShell shell;
 
-  void _go(int index) => shell.goBranch(index, initialLocation: index == shell.currentIndex);
+  void _go(WidgetRef ref, int index) {
+    // My orders may have moved on while another tab was showing: fetch it again on the way in.
+    if (index == 2) ref.invalidate(myOrdersProvider);
+    shell.goBranch(index, initialLocation: index == shell.currentIndex);
+  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -37,7 +42,7 @@ class CustomerShell extends ConsumerWidget {
             children: [
               NavigationRail(
                 selectedIndex: shell.currentIndex,
-                onDestinationSelected: _go,
+                onDestinationSelected: (i) => _go(ref, i),
                 labelType: NavigationRailLabelType.all,
                 backgroundColor: context.palette.card,
                 indicatorColor: Theme.of(context).navigationBarTheme.indicatorColor,
@@ -78,7 +83,7 @@ class CustomerShell extends ConsumerWidget {
             ),
             child: NavigationBar(
               selectedIndex: shell.currentIndex,
-              onDestinationSelected: _go,
+              onDestinationSelected: (i) => _go(ref, i),
               destinations: [
                 for (final (icon, selected, label) in _destinations)
                   NavigationDestination(icon: Icon(icon), selectedIcon: Icon(selected), label: label),

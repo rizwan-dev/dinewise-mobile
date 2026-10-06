@@ -4,6 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'core/providers.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
+import 'features/orders/data/orders_repository.dart';
 
 class DinewiseApp extends ConsumerStatefulWidget {
   const DinewiseApp({super.key});
@@ -20,6 +21,8 @@ class _DinewiseAppState extends ConsumerState<DinewiseApp> {
     super.initState();
     _lifecycle = AppLifecycleListener(
       onStateChange: (state) => ref.read(appForegroundProvider.notifier).update(state),
+      // Orders move on while the app is in the background.
+      onResume: () => ref.invalidate(myOrdersProvider),
     );
   }
 

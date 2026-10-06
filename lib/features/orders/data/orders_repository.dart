@@ -62,7 +62,11 @@ class OrderNotifier extends AsyncNotifier<Order> {
     final result = await AsyncValue.guard(() => _repo.get(code));
     if (!ref.mounted) return null;
     // Keep showing the last good order if a refresh fails; the live stream will try again.
+    final before = state.value?.status;
     if (result.hasValue || !state.hasValue) state = result;
+    if (result.value != null && before != null && result.value!.status != before) {
+      ref.invalidate(myOrdersProvider);
+    }
     return result.error;
   }
 
