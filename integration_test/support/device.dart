@@ -109,14 +109,25 @@ Future<void> typeInto(WidgetTester tester, Finder field, String text) async {
   await tester.ensureVisible(field.first);
   await tester.tap(field.first, warnIfMissed: false);
   await pause(tester, 300);
-  await tester.enterText(field.first, text);
+  // On a phone the keyboard can push the field out of a lazily built list: find it again.
+  for (var attempt = 1; ; attempt++) {
+    try {
+      await tester.enterText(field.first, text);
+      break;
+    } on StateError {
+      if (attempt == 3) rethrow;
+      await waitFor(tester, field);
+      await tester.ensureVisible(field.first);
+    }
+  }
   await pause(tester, 500);
 }
 
 /// Scrolls whichever vertical list holds [target] until it is on screen.
 Future<void> reveal(WidgetTester tester, Finder target) async {
   if (target.evaluate().isEmpty) await waitFor(tester, target);
-  await tester.ensureVisible(target.first);
+  // Bring it fully into view, a little below the top edge rather than tucked under a header.
+  await Scrollable.ensureVisible(tester.element(target.first), alignment: 0.02);
   await pause(tester, 300);
 }
 
