@@ -234,6 +234,7 @@ void main() {
       await search(tester, 'garlic');
       await pullToRefresh(tester);
       await waitFor(tester, find.text('Sold out'));
+      await reveal(tester, find.text('Garlic Naan'));
       await shot(tester, '15-menu-sold-out');
     } finally {
       await Api.setAvailable(29, true);
@@ -269,6 +270,7 @@ void main() {
     await tapOn(tester, find.text('Tomorrow'));
     final chip = tester.widget<ChoiceChip>(find.widgetWithText(ChoiceChip, time));
     expect(chip.onSelected, isNull, reason: 'the full slot cannot be chosen');
+    await reveal(tester, find.widgetWithText(ChoiceChip, time));
     await shot(tester, '17-slot-full');
     await tapOn(tester, find.text('As soon as possible').first);
     await tapOn(tester, find.text('Place order'));

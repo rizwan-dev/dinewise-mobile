@@ -134,7 +134,8 @@ Future<void> reveal(WidgetTester tester, Finder target) async {
 /// Marks a screenshot moment: the host runner sees the line and captures the simulator.
 Future<void> shot(WidgetTester tester, String name) async {
   FocusManager.instance.primaryFocus?.unfocus();
-  await pause(tester, 900);
+  // Let photos finish loading and fading in (an emulator's network is slow).
+  await pause(tester, 3000);
   // ignore: avoid_print
   print('SHOT:$name');
   await pause(tester, 3000);
